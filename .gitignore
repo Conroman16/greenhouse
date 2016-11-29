@@ -1,0 +1,14 @@
+# Compiled CSS directory
+static/css/
+
+# Dependency directory
+node_modules
+
+# Logs
+npm-debug.log*
+
+# WebStorm
+.idea/
+
+# OS X
+.DS_Store*

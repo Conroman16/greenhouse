@@ -1,0 +1,17 @@
+{
+  "name": "greenhouse",
+  "version": "1.0.0",
+  "description": "Greenhouse Controller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"These are not the tests you are looking for...\" && exit 1"
+  },
+  "author": "Connor Kennedy",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "node-sass-middleware": "^0.10.0",
+    "swig-templates": "^2.0.2"
+  }
+}
