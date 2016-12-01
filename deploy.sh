@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+pwFilePath="../.env.pw"
+
+# Unzip private env vars file
+unzip -P $(cat $pwFilePath) -o .env.zip
+
 # Install npm packages
 echo "Installing npm packages"
 npm install

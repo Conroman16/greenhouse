@@ -4,6 +4,9 @@ static/css/
 # Databases
 *.db
 
+# Private config files
+*.env.js
+
 # Dependency directory
 node_modules
 
