@@ -1,6 +1,9 @@
 # Compiled CSS directory
 static/css/
 
+# Databases
+*.db
+
 # Dependency directory
 node_modules
 
