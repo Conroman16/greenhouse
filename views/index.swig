@@ -1,7 +1,9 @@
 {% extends 'layout.swig' %}
 
 {% block body %}
-Hi
+	<h3>Hi</h3>
+	<br>
+	<a href="{{ LogoutPath }}">Logout</a>
 {% endblock %}
 
 {% block scripts %}

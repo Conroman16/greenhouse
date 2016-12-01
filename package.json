@@ -1,25 +1,29 @@
 {
-  "name": "greenhouse",
-  "version": "1.0.0",
-  "description": "Greenhouse Controller",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"These are not the tests you are looking for...\" && exit 1"
-  },
-  "author": "Connor Kennedy",
-  "license": "MIT",
-  "dependencies": {
-    "bcrypt": "^0.8.7",
-    "body-parser": "^1.15.2",
-    "connect-sqlite3": "^0.9.8",
-    "cookie-parser": "^1.4.3",
-    "express": "^4.14.0",
-    "express-session": "^1.14.2",
-    "node-sass-middleware": "^0.10.0",
-    "passport": "^0.3.2",
-    "passport-local": "^1.0.0",
-    "sequelize": "^3.27.0",
-    "sqlite3": "^3.1.8",
-    "swig-templates": "^2.0.2"
-  }
+	"name": "greenhouse",
+	"version": "1.0.0",
+	"description": "Greenhouse Controller",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Conroman16/greenhouse.git"
+	},
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"These are not the tests you are looking for...\""
+	},
+	"author": "Connor Kennedy",
+	"license": "MIT",
+	"dependencies": {
+		"bcrypt": "^0.8.7",
+		"body-parser": "^1.15.2",
+		"connect-sqlite3": "^0.9.8",
+		"cookie-parser": "^1.4.3",
+		"express": "^4.14.0",
+		"express-session": "^1.14.2",
+		"node-sass-middleware": "^0.10.0",
+		"passport": "^0.3.2",
+		"passport-local": "^1.0.0",
+		"sequelize": "^3.27.0",
+		"sqlite3": "^3.1.8",
+		"swig-templates": "^2.0.2"
+	}
 }

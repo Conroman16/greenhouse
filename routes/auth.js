@@ -20,10 +20,20 @@ module.exports = () => {
 			res.render('login', viewData());
 	});
 
-	router.post('/login',
-		passport.authenticate('local', { failureRedirect: config.loginPath }),
-		(req, res) => res.redirect('/')
-	);
+	router.post('/login', (req, res, next) => {
+		passport.authenticate('local', (err, user) => {
+			if (err && /of null/i)
+				return res.redirect(config.registerPath + '?from=login');
+			else if (!user)
+				return res.redirect(config.loginPath + '?status=failed');
+
+			req.logIn(user, (err) => {
+				if (err)
+					return next(err);
+				return res.redirect('/');
+			});
+		})(req, res, next);
+	});
 
 	router.get('/register', (req, res) => {
 		if (req.isAuthenticated())
