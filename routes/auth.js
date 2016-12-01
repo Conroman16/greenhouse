@@ -29,7 +29,7 @@ module.exports = () => {
 		if (req.isAuthenticated())
 			res.redirect('/');
 		else
-			res.render('create', viewData());
+			res.render('register', viewData());
 	});
 
 	router.post('/register', (req, res) => {
@@ -44,7 +44,7 @@ module.exports = () => {
 			res.status(500).send({success: false, error: 'invalid password'});
 		else
 			auth.createUser(username, password, firstName, lastName).then((newUser) => {
-				res.status(200).send(newUser);
+				res.status(200).redirect('/');
 			}).catch((err) => {
 				res.status(500).send(err);
 			});
