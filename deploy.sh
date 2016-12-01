@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Install npm packages
 echo "Installing npm packages"
 npm install
