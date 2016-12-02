@@ -20,6 +20,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "moment": "^2.13.0",
+    "node-dht-sensor": "0.0.32",
     "node-rest-client": "^2.0.1",
     "node-sass-middleware": "^0.10.0",
     "node-schedule": "^1.2.0",
