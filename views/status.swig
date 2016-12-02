@@ -11,6 +11,12 @@
 		<dd>{{ Temperature|default('--') }}</dd>
 		<dt>Humidity:</dt>
 		<dd>{{ Humidity|default('--') }}</dd>
+		<dt>Sunrise:</dt>
+		<dd>{{ Sunrise|default('--') }}</dd>
+		<dt>Sunset:</dt>
+		<dd>{{ Sunset|default('--') }}</dd>
+		{#<dt>Next Weather Update:</dt>#}
+		{#<dd>{{ NextWeatherUpdate|default('--') }}</dd>#}
 	</dl>
 {% endblock %}
 

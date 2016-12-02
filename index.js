@@ -4,7 +4,10 @@ if (!process.env.NODE_ENV)
 console.log(`${process.env.NODE_ENV.toUpperCase()} MODE`);
 
 var db = require('./db'),
-	server = require('./lib/server');
+	server = require('./lib/server'),
+	weather = require('./lib/weather');
+
+weather.init();
 
 db.sequelize.sync().then(() => {
 	server.start();
