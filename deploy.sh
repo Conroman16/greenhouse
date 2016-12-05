@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 pwFilePath="../.env.pw"
 
 # Unzip private env vars file
