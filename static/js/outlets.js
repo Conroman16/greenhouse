@@ -3,11 +3,11 @@ window.socket = io.connect(window.location.href);
 $(function(){
 	window.socket.on('outletOn', function(data){
 		var outlet = $(`.outlet-${data.id}`);
-		outlet.parent().find('.outlet-status').text('On: true');
+		outlet.parent().find('.outlet-status').toggleClass('red green');
 	});
 	window.socket.on('outletOff', function(data){
 		var outlet = $(`.outlet-${data.id}`);
-		outlet.parent().find('.outlet-status').text('On: false');
+		outlet.parent().find('.outlet-status').toggleClass('red green');
 	});
 
 	$('.outlet-toggle').click(function(e){

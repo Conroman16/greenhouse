@@ -18,7 +18,8 @@ module.exports = () => {
 			outlets: _.map(gpio.outlets, (outlet) => {
 				return {
 					OutletID: outlet.id,
-					TurnedON: outlet.on.toString()
+					TurnedON: outlet.on.toString(),
+					LedClass: !!outlet.on ? 'green' : 'red'
 				};
 			})
 		}));

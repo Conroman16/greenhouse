@@ -10,7 +10,7 @@
 	{% for outlet in outlets %}
 		<li class="outlet">
 			<div class="outlet-id outlet-{{ outlet.OutletID }}">{{ outlet.OutletID|default('--') }}</div>
-			<div class="outlet-status">On: {{ outlet.TurnedON|default('error') }}</div>
+			<div class="outlet-status led {{ outlet.LedClass }}"></div>
 			<div class="outlet-controls">
 				<button class="outlet-toggle" data-outletid="{{ outlet.OutletID }}">Toggle</button>
 			</div>

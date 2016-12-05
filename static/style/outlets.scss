@@ -1,0 +1,16 @@
+.led {
+  border-radius: 100%;
+  display: inline-block;
+  width: 75px;
+  height: 75px;
+
+  &.green{
+    @include led($greenStartColor, $greenEndColor);
+  }
+  &.red{
+    @include led($redStartColor, $redEndColor);
+  }
+  &.yellow{
+    @include led($yellowStartColor, $yellowEndColor);
+  }
+}
