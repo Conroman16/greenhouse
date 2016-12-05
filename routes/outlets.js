@@ -8,6 +8,8 @@ var _ = require('underscore');
 
 module.exports = () => {
 
+	var io;
+
 	router.get('/', (req, res) => {
 		if (req.isUnauthenticated())
 			return res.status(401).redirect(config.loginPath);
@@ -38,17 +40,15 @@ module.exports = () => {
 	});
 
 	events.on('socketsStarted', () => {
-		server.io.of('/outlets').on('connection', (socket) => {
-			console.log('Socket connected to /outlets');
-		});
+		io = server.io.of('/outlets');
 	});
 
 	events.on('outletOn', (data) => {
-		server.io.of('/outlets').emit('outletOn', data);
+		io.emit('outletOn', data);
 	});
 
 	events.on('outletOff', (data) => {
-		server.io.of('/outlets').emit('outletOff', data);
+		io.emit('outletOff', data);
 	});
 
 	return router;
