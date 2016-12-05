@@ -4,7 +4,6 @@ var viewData = require('../lib/viewdata');
 var weather = require('../lib/weather');
 var gpio = require('../lib/gpio');
 var util = require('../lib/util');
-var moment = require('moment');
 var sunFormat = 'h:mm a';
 
 module.exports = () => {

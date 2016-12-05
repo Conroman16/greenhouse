@@ -23,11 +23,12 @@
     "node-dht-sensor": "0.0.32",
     "node-rest-client": "^2.0.1",
     "node-sass-middleware": "^0.10.0",
-    "node-schedule": "^1.2.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "sequelize": "^3.27.0",
+    "socketio": "^1.0.0",
     "sqlite3": "^3.1.8",
-    "swig-templates": "^2.0.2"
+    "swig-templates": "^2.0.2",
+    "underscore": "^1.8.3"
   }
 }
