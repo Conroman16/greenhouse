@@ -9,3 +9,4 @@ npm install
 
 # Start the app
 pm2 startOrRestart ecosystem.json --env production
+
