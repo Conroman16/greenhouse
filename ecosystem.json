@@ -27,7 +27,7 @@
 			"ref": "origin/master",
 			"repo": "https://github.com/Conroman16/greenhouse.git",
 			"path": "/var/www/greenhouse",
-			"post-deploy": "sudo chmod +x deploy.sh && sudo ./deploy.sh"
+			"post-deploy": "chmod +x deploy.sh && /deploy.sh"
 		}
 	}
 }
