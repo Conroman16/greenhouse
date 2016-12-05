@@ -17,4 +17,5 @@ npm-debug.log*
 .idea/
 
 # OS X
-.DS_Store*
+._.DS_Store
+.DS_Store
