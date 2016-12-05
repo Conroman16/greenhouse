@@ -1,5 +1,8 @@
 pwFilePath="../.env.pw"
 
+# Change permissions on logs
+chmod 777 /tmp/pm2* -R
+
 # Unzip private env vars file
 unzip -P $(cat $pwFilePath) -o .env.zip
 
@@ -8,4 +11,4 @@ echo "Installing npm packages"
 npm install
 
 # Start the app
-sudo pm2 startOrRestart ecosystem.json --env production
+pm2 startOrRestart ecosystem.json --env production
