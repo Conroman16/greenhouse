@@ -1,16 +1,44 @@
-.led {
-  border-radius: 100%;
-  display: inline-block;
-  width: 75px;
-  height: 75px;
+.page{
 
-  &.green{
-    @include led($greenStartColor, $greenEndColor);
-  }
-  &.red{
-    @include led($redStartColor, $redEndColor);
-  }
-  &.yellow{
-    @include led($yellowStartColor, $yellowEndColor);
-  }
+	&.disconnected{
+		opacity: 0.5;
+	}
+
+	.outlet-list{
+		.outlet{
+			display: inline-block;
+			padding: 2em 4em;
+			border: 1px solid rgba(0,0,0,0.1);
+			margin: 0.5em;
+			@include drop-shadow();
+
+			.outlet-id {
+				text-align: center;
+				font-size: 4em;
+				font-family: 'Roboto';
+				padding: 0;
+				margin: -1vh 0 2vh 0;
+			}
+
+			.outlet-description{
+				font-family: Arial;
+				text-align: center;
+			}
+		}
+	}
+}
+
+.led {
+	width: 100px;
+	height: 100px;
+
+	&.green{
+		@include led($greenStartColor, $greenEndColor);
+	}
+	&.red{
+		@include led($redStartColor, $redEndColor);
+	}
+	&.yellow{
+		@include led($yellowStartColor, $yellowEndColor);
+	}
 }

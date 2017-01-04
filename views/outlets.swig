@@ -4,19 +4,21 @@
 {% endblock %}
 
 {% block body %}
-	<h2>Outlets</h2>
-	<br>
-	<ul>
-	{% for outlet in outlets %}
-		<li class="outlet">
-			<div class="outlet-id outlet-{{ outlet.OutletID }}">{{ outlet.OutletID|default('--') }}</div>
-			<div class="outlet-status led {{ outlet.LedClass }}"></div>
-			<div class="outlet-controls">
-				<button class="outlet-toggle" data-outletid="{{ outlet.OutletID }}">Toggle</button>
-			</div>
-		</li>
-	{% endfor %}
-	</ul>
+	<div class="page">
+		{# <h2 class="page-header">Outlets</h2>
+		<br> #}
+		<ul class="outlet-list">
+		{% for outlet in outlets %}
+			<li class="outlet" data-outletid="{{ outlet.OutletID }}">
+				<div class="outlet-id outlet-{{ outlet.OutletID }}">{{ outlet.OutletID|default('--') }}</div>
+				<div class="outlet-status outlet-toggle led {{ outlet.LedClass }}" ></div>
+				{# <div class="outlet-controls">
+					<button class="outlet-toggle">Toggle</button>
+				</div> #}
+			</li>
+		{% endfor %}
+		</ul>
+	</div>
 {% endblock %}
 
 {% block scripts %}

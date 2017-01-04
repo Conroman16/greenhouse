@@ -1,4 +1,18 @@
 @import 'variables.scss';
 @import 'fonts.scss';
 @import 'mixins.scss';
+@import 'simplegrid.scss';
+@import 'list.scss';
 @import 'outlets.scss';
+@import 'devices.scss';
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.clearfix:after {
+    content: " ";
+    display: block;
+    clear: both;
+}

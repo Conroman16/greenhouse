@@ -1,5 +1,4 @@
 var router = require('express').Router();
-var viewData = require('../lib/viewdata');
 var config = require('../lib/config');
 var server = require('../lib/server');
 var events = require('../lib/events');
@@ -11,24 +10,17 @@ module.exports = () => {
 	var io;
 
 	router.get('/', (req, res) => {
-		if (req.isUnauthenticated())
-			return res.status(401).redirect(config.loginPath);
-
-		res.render('outlets', viewData({
+		res.render('outlets', {
 			outlets: _.map(gpio.outlets, (outlet) => {
 				return {
 					OutletID: outlet.id,
-					TurnedON: outlet.on.toString(),
 					LedClass: !!outlet.on ? 'green' : 'red'
 				};
 			})
-		}));
+		});
 	});
 
 	router.post('/', (req, res) => {
-		if (req.isUnauthenticated())
-			return res.sendStatus(401);
-
 		var outletId = req.body.outletId;
 		if (!outletId)
 			return res.status(500).send({

@@ -1,16 +1,36 @@
 var router = require('express').Router();
 var config = require('../lib/config');
-var viewData = require('../lib/viewdata');
+var childProcess = require('child_process');
+var util = require('../lib/util');
+
+function execCommand(command, cb){
+	return childProcess.exec(command, cb);
+}
 
 module.exports = () => {
 
 	router.get('/', (req, res) => {
-		if (req.isUnauthenticated()) {
-			res.redirect(config.loginPath);
-			return;
-		}
+		res.render('index/index');
+	});
 
-		res.render('index', viewData());
+	router.get(/\/(shutdown|restart)+/i, (req, res) => {
+		res.render('index/action', {
+			action: req.params[0]
+		});
+	});
+
+	router.post('/restart', (req, res) => {
+		res.sendStatus(200);
+		setTimeout(() => {
+			execCommand('reboot');
+		}, 500);
+	});
+
+	router.post('/shutdown', (req, res) => {
+		res.sendStatus(200);
+		setTimeout(() => {
+			execCommand('shutdown -h now');
+		}, 500);
 	});
 
 	return router;

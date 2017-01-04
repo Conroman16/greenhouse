@@ -20,6 +20,14 @@
 		{#});#}
 	{#</script>#}
 	{#{% endif %}#}
+	{% if IsDev %}
+	<link rel="stylesheet" href="/static/css/devdata.css"></link>
+	<div id="dev-data-banner-wrap" class="clearfix">
+		<div class="dev-data-banner">
+			<p class="dev-data-banner-text">Dev Data</p>
+		</div>
+	</div>
+	{% endif %}
 </head>
 <body>
 	{% block body %}{% endblock %}

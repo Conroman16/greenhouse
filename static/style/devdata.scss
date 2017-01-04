@@ -1,0 +1,21 @@
+#dev-data-banner-wrap{
+	float: right;
+	width: 250px;
+	transform: translateX(90px) translateY(24px);
+
+	.dev-data-banner{
+		transform: rotate(45deg);
+
+		.dev-data-banner-text{
+			background-color: #333;
+			opacity: 0.6;
+			text-align: center;
+			padding: 6px 75px;
+			color: white;
+			font-family: 'Roboto';
+			font-weight: bold;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+	}
+}

@@ -3,9 +3,12 @@ var passport = require('passport');
 var db = require('../db');
 var config = require('../lib/config');
 var auth = require('../lib/auth');
-var viewData = require('../lib/viewdata');
 
 module.exports = () => {
+
+	router.get('/createdevuser', (req, res) => {
+		auth.createUser('admin', 'Password1!', 'Dev', 'User');
+	});
 
 	router.get('/logout', (req, res) => {
 		if (req.isAuthenticated())
@@ -17,20 +20,23 @@ module.exports = () => {
 		if (req.isAuthenticated())
 			res.redirect('/');
 		else
-			res.render('login', viewData());
+			res.render('login');
 	});
 
 	router.post('/login', (req, res, next) => {
 		passport.authenticate('local', (err, user) => {
-			if (err && /of null/i)
-				return res.redirect(config.registerPath + '?from=login');
+			if (err && /of null/i.test(err))
+				return res.redirect(`${config.registerPath}?from=login`);
 			else if (!user)
-				return res.redirect(config.loginPath + '?status=failed');
+				return res.redirect(`${config.loginPath}?status=failed`);
 
 			req.logIn(user, (err) => {
 				if (err)
 					return next(err);
-				return res.redirect('/');
+				else if (req.query.u)
+					return res.redirect(decodeURIComponent(u));
+				else
+					return res.redirect('/');
 			});
 		})(req, res, next);
 	});
@@ -39,7 +45,7 @@ module.exports = () => {
 		if (req.isAuthenticated())
 			res.redirect('/');
 		else
-			res.render('register', viewData());
+			res.render('register');
 	});
 
 	router.post('/register', (req, res) => {

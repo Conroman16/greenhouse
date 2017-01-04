@@ -1,0 +1,18 @@
+.device-item{
+	.led{
+		margin: auto;
+		display: block;
+	}
+
+	.device-prop-list{
+		margin: auto;
+
+		.device-prop-list-item{
+			list-style: none;
+
+			.item-title{
+				font-weight: bold;
+			}
+		}
+	}
+}
