@@ -3,11 +3,11 @@ var router = require('express').Router();
 var viewData = require('../lib/viewdata');
 var config = require('../lib/config');
 var server = require('../lib/server');
-var events = require('../lib/events');
 var gpio = require('../lib/gpio');
 var devices = require('../lib/device');
 var scheduler = require('../lib/scheduler');
 var _ = require('underscore');
+let db = require('../db');
 
 module.exports = () => {
 
@@ -95,18 +95,36 @@ module.exports = () => {
 		})
 	});
 
+	router.post('/addagenda/:id', (req, res) => {
+		var deviceId = req.params.id;
+		if (!deviceId)
+			return res.status(500).redirect('/device/list');
+		else if (!req.body.timeString || !req.body.agendaName)
+			return res.status(500).send({ error: '"timeString" and "agendaName" must both be truthy' });
+
+		db.DeviceAgenda.create({
+			deviceId: deviceId,
+			agendaJobName: req.body.agendaName,
+			timeString: req.body.timeString
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send(err);
+		})
+		.then((newDeviceAgenda) => {
+			res.send(newDeviceAgenda);
+		});
+	});
+
 	router.get('/details/:id', (req, res) => {
 		var deviceId = req.params.id;
 		if (!deviceId)
 			return res.status(500).redirect('/device/list');
 
-		// scheduler.addInterval(deviceId);
-
 		devices.get(deviceId, true).then((dev) => {
 			var device = _.extend({}, dev.dataValues, {
 				ledClass: gpio.getOutlet(dev.outletId).on ? 'green' : 'red'
 			});
-			console.log(device);
 			res.render('device/details', device);
 		}).catch((err) => {
 			res.sendStatus(500);
@@ -146,18 +164,19 @@ module.exports = () => {
 		res.sendStatus(200);
 	});
 
-	var io;
+	let io,
+		events = require('../lib/events');
 
-	events.on('socketsStarted', () => {
+	events.emitter.on('socketsStarted', () => {
 		io = server.io.of('/device');
 	});
 
-	events.on('outletOn', (data) => {
+	events.emitter.on('outletOn', (data) => {
 		io.emit('deviceOn', data);
 	});
 
-	events.on('outletOff', (data) => {
-		io.emit('deviceOn', data);
+	events.emitter.on('outletOff', (data) => {
+		io.emit('deviceOff', data);
 	});
 
 	return router;

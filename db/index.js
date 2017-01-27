@@ -3,7 +3,10 @@ var path      = require('path');
 var Sequelize = require('sequelize');
 var basename  = path.basename(module.filename);
 var config    = require('./config.json')[process.env.NODE_ENV];
+var appConfig = require('../lib/config');
 var db        = {};
+
+config.logging = appConfig.logSqlOutput;
 
 if (config.use_env_variable) {
   var sequelize = new Sequelize(process.env[config.use_env_variable]);

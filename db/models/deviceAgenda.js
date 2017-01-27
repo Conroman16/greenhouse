@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		timeString: {
 			type: DataTypes.STRING,
-			allowNull: true
+			allowNull: false
 		}
 	}, {
 		classMethods: {

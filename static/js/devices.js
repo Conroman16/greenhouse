@@ -21,8 +21,11 @@ $(function(){
 	});
 
 	socket.on('connect', function(){
-		if ($('.page').hasClass('disconnected'))
-			location.reload();
+		if ($('.page').hasClass('disconnected')){
+			setTimeout(function(){
+				location.reload();
+			}, 500);
+		}
 	});
 
 	$('.device-toggle').click(function(e){

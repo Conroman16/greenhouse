@@ -1,11 +1,10 @@
-var router = require('express').Router();
-var config = require('../lib/config');
-var server = require('../lib/server');
-var events = require('../lib/events');
-var gpio = require('../lib/gpio');
-var _ = require('underscore');
-
 module.exports = () => {
+
+	var router = require('express').Router();
+	var config = require('../lib/config');
+	var server = require('../lib/server');
+	var gpio = require('../lib/gpio');
+	var _ = require('underscore');
 
 	var io;
 
@@ -32,15 +31,17 @@ module.exports = () => {
 		res.status(200).send({ success: true, message: 'outlet toggled successfully' });
 	});
 
-	events.on('socketsStarted', () => {
+	let events = require('../lib/events');
+
+	events.emitter.on('socketsStarted', () => {
 		io = server.io.of('/outlets');
 	});
 
-	events.on('outletOn', (data) => {
+	events.emitter.on('outletOn', (data) => {
 		io.emit('outletOn', data);
 	});
 
-	events.on('outletOff', (data) => {
+	events.emitter.on('outletOff', (data) => {
 		io.emit('outletOff', data);
 	});
 

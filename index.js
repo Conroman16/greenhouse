@@ -3,19 +3,42 @@ if (!process.env.NODE_ENV)
 
 console.log(`${process.env.NODE_ENV.toUpperCase()} MODE`);
 
-var gpio = require('./lib/gpio'),
-	db = require('./db'),
-	server = require('./lib/server'),
-	scheduler = require('./lib/scheduler'),
-	weather = require('./lib/weather'),
-	util = require('./lib/util'),
-	events = require('./lib/events');
+let async = require('async');
+let events = require('./lib/events');
+let gpio = require('./lib/gpio');
+let db = require('./db');
+let server = require('./lib/server');
+let scheduler = require('./lib/scheduler');
 
-events.init();
-gpio.init();
-scheduler.init();
-// weather.init();
-
-db.sequelize.sync().then(() => {
-	server.start();
+setTimeout(() => {
+	async.series([
+		(next) => {
+			events.init();
+			next();
+		},
+		(next) => {
+			gpio.init(next);
+		},
+		// (next) => {
+		// 	require('./lib/weather').init();
+		// 	next();
+		// },
+		(next) => {
+			db.sequelize.sync()
+				.catch((err) => next(err))
+				.then(() => next());
+		},
+		(next) => {
+			server.start();
+			next();
+		},
+		(next) => {
+			scheduler.init();
+			next();
+		}
+	],
+	(err, results) => {
+		if (err)
+			console.error('There were errors during startup');
+	});
 });

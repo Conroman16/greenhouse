@@ -1,18 +1,28 @@
 .device-item{
-	.led{
-		margin: auto;
-		display: block;
-	}
+	margin: 1em 2em;
+	padding: 0;
+	@include fade-in();
+}
 
-	.device-prop-list{
-		margin: auto;
+.device-status.led{
+	margin: 0 auto 2em;
+	display: block;
+}
 
-		.device-prop-list-item{
-			list-style: none;
+.item-title{
+	font-weight: bold;
+	text-align: right;
+}
 
-			.item-title{
-				font-weight: bold;
-			}
+table{
+	width: 100%;
+
+	td{
+		padding: 0 1em;
+		width: 50%;
+
+		&.title{
+			text-align: right;
 		}
 	}
 }

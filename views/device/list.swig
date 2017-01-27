@@ -1,52 +1,70 @@
 {% extends '../layout.swig' %}
 
-{% block style %}
-{% endblock %}
-
 {% block body %}
-<div class="page grid">
-	<div class="col-1-1">
-		<a href="/device/create">Create</a>
-	</div>
-	<ul class="device-list list col-1-1">
+<div class="page container">
+	<a class="btn btn-secondary" href="/device/create">Create</a>
+	<div class="row">
 		{% for device in devices %}
-		<li class="device-item col-1-1 list-item device-{{ device.id }} outlet-{{ device.outletId }}" data-deviceid="{{ device.id }}">
-			<div class="grid">
-				<div class="col-1-6">
-					<div class="device-status led {{ device.ledClass }} device-toggle"></div>
+		<div class="card col-3 device-item device-{{ device.id }} outlet-{{ device.outletId }}" data-deviceid="{{ device.id }}">
+			<div class="card-block">
+				<div class="row">
+					<div class="col">
+						<div class="device-status led {{ device.ledClass }} device-toggle"></div>
+					</div>
 				</div>
-				<div class="col-4-6">
-					<ul class="device-prop-list">
-						<li class="device-prop-list-item">
-							<span class="item-title">Device ID</span>
-							<span class="item-value">{{ device.id }}</span>
-						</li>
-						<li class="device-prop-list-item">
-							<span class="item-title">Outlet ID</span>
-							<span class="item-value">{{ device.outletId }}</span>
-						</li>
-						<li class="device-prop-list-item">
-							<span class="item-title">Name</span>
-							<span class="item-value">{{ device.name }}</span>
-						</li>
-						<li class="device-prop-list-item">
-							<span class="item-title">Type</span>
-							<span class="item-value">{{ device.type }}</span>
-						</li>
-						<li class="device-prop-list-item">
-							<span class="item-title">Description</span>
-							<span class="item-value">{{ device.description }}</span>
-						</li>
-					</ul>
-				</div>
-				<div class="col-1-6">
-					<a href="/device/details/{{ device.id }}">Details</a>
-					<a href="#" class="js-delete" data-deviceid="{{ device.id }}" data-devicename="{{ device.name }}">Delete</a>
+				<div class="row">
+					<div class="col device-prop-list">
+						<div class="row device-prop-list-item">
+							<div class="col-4">
+								<div class="item-title">Device ID</div>
+							</div>
+							<div class="col-8 text-center">
+								<div class="item-value">{{ device.id }}</div>
+							</div>
+						</div>
+						<div class="row device-prop-list-item">
+							<div class="col-4">
+								<div class="item-title">Outlet ID</div>
+							</div>
+							<div class="col-8 text-center">
+								<div class="item-value">{{ device.outletId }}</div>
+							</div>
+						</div>
+						<div class="row device-prop-list-item">
+							<div class="col-4">
+								<div class="item-title">Name</div>
+							</div>
+							<div class="col-8 text-center">
+								<div class="item-value">{{ device.name }}</div>
+							</div>
+						</div>
+						<div class="row device-prop-list-item">
+							<div class="col-4">
+								<div class="item-title">Type</div>
+							</div>
+							<div class="col-8 text-center">
+								<div class="item-value">{{ device.type }}</div>
+							</div>
+						</div>
+						<div class="row device-prop-list-item">
+							<div class="col-4">
+								<div class="item-title">Description</div>
+							</div>
+							<div class="col-8 text-center">
+								<div class="item-value">{{ device.description }}</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</li>
+			<div class="card-footer text-center">
+				<a href="/device/details/{{ device.id }}" class="btn btn-info">Details</a>
+				&nbsp;&nbsp;
+				<a href="#" class="js-delete btn btn-danger" data-deviceid="{{ device.id }}" data-devicename="{{ device.name }}">Delete</a>
+			</div>
+		</div>
 		{% endfor %}
-	</ul>
+	</div>
 </div>
 {% endblock %}
 
@@ -59,13 +77,46 @@
 			var self = $(this);
 			var deviceId = self.data('deviceid');
 			var deviceName = self.data('devicename');
-			if (confirm('Are you sure you want to delete ' + deviceName + '?')){
-				$.post(window.location.origin + '/device/delete', {
-					deviceId: deviceId
-				}, function(){
-					window.location.pathname = '/device/list';
-				});
-			}
+
+			swal({
+				title: 'Are you sure you want to delete ' + deviceName + '?',
+				text: 'This device will be deleted forever and you won\'t be able to get it back!',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#e74c3c',
+				confirmButtonText: 'Yes',
+				cancelButtonText: 'Nope',
+				closeOnConfirm: false,
+				showLoaderOnConfirm: true
+			},
+			function(isConfirm){
+				if (isConfirm) {
+					$.post(window.location.origin + '/device/delete', {
+						deviceId: deviceId
+					}, function(){
+						$('.device-' + deviceId).css('opacity', 0);
+						setTimeout(function(){
+							$('.device-' + deviceId).remove();
+						}, 750);
+						swal({
+							type: 'success',
+							title: 'Success',
+							text: '<strong>' + deviceName + '</strong> was deleted successfully',
+							html: true
+						});
+					})
+					.catch(function(err){
+						console.error(err);
+						swal({
+							type: 'error',
+							title: 'Error',
+							text: 'An error occurred while deleting the device'
+						});
+					});
+				}
+				else
+					swal("Cancelled", "Your imaginary file is safe :)", "error");
+			});
 		});
 	})
 </script>

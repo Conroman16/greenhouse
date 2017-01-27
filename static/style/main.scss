@@ -1,8 +1,6 @@
 @import 'variables.scss';
 @import 'fonts.scss';
 @import 'mixins.scss';
-@import 'simplegrid.scss';
-@import 'list.scss';
 @import 'outlets.scss';
 @import 'devices.scss';
 
@@ -15,4 +13,8 @@
     content: " ";
     display: block;
     clear: both;
+}
+
+.container {
+	width: 72%;
 }
