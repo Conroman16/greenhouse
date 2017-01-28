@@ -1,5 +1,8 @@
+.device-wrapper{
+	padding: 1em;
+}
+
 .device-item{
-	margin: 1em;
 	padding: 0;
 	@include fade-in();
 }
