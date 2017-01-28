@@ -125,7 +125,11 @@ module.exports = () => {
 			var device = _.extend({}, dev.dataValues, {
 				ledClass: gpio.getOutlet(dev.outletId).on ? 'green' : 'red'
 			});
-			res.render('device/details', device);
+			let jobs = Object.keys(scheduler.jobs);
+			res.render('device/details', {
+				AllAgendaJobs: jobs,
+				Device: device
+			});
 		}).catch((err) => {
 			res.sendStatus(500);
 			console.error(err);

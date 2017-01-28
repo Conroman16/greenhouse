@@ -17,7 +17,8 @@
 		</div>
 	</div>
 	{% endif %}
-	{% include 'templates/client-templates.swig' %}
+	{# {% include 'templates/client-templates.swig' %} #}
+	{% block templates %}{% endblock %}
 </head>
 <body>
 	{% block body %}{% endblock %}

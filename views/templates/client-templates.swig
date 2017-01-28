@@ -1,4 +1,4 @@
-<script id="add-device-form" data-name="addDeviceForm" type="text/x-swig-template">
+{# <script id="add-device-form" data-name="addDeviceForm" type="text/x-swig-template">
 	<form class="add-device-form" action="<{ action }>" method="POST">
 		<input type="hidden" value="<{ deviceId }>" />
 		<div class="form-group">
@@ -9,16 +9,16 @@
 			<label for="agendaName">Agenda Name</label>
 			<input type="text" class="form-control input" name="agendaName" aria-label="Agenda Name" required />
 		</div>
-		{# <div class="form-group">
-			<label for="agenda">Job</label>
+		<div class="form-group">
+			<label for="agenda">Agenda Name</label>
 			<select name="agenda">
-				{% for agenda in DeviceAgendas %}
-
-				{% endfor %}
+				<% for agenda in allAgendas %>
+					<option class="agenda-item" value="<{ agenda.name }>"><{ agenda.FriendlyName }></option>
+				<% endfor %>
 			</select>
-		</div> #}
+		</div>
 		<div class="form-group">
 			<input type="submit" class="btn btn-submit" />
 		</div>
 	</form>
-</script>
+</script> #}

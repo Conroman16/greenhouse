@@ -15,6 +15,17 @@
     clear: both;
 }
 
+.mobile{
+	.row,
+	.container {
+		width: 100%;
+	}
+
+	.row{
+		margin: 0;
+	}
+}
+
 .container {
 	width: 72%;
 }
