@@ -24,6 +24,11 @@ setTimeout(() => {
 			gpio.init(next);
 		},
 		(next) => {
+			db.sequelize.sync()
+				.catch((err) => next(err))
+				.then(() => next());
+		},
+		(next) => {
 			device.init()
 				.catch((err) => next(err))
 				.then(() => next());
@@ -32,11 +37,6 @@ setTimeout(() => {
 		// 	require('./lib/weather').init();
 		// 	next();
 		// },
-		(next) => {
-			db.sequelize.sync()
-				.catch((err) => next(err))
-				.then(() => next());
-		},
 		(next) => {
 			server.start();
 			next();
