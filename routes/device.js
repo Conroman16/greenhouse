@@ -38,7 +38,8 @@ module.exports = () => {
 		if (!outletId || !deviceType || !deviceName)
 			return res.sendStatus(500);
 
-		devices.createDevice(outletId, deviceType, deviceName, deviceDescription, defaultSetting).then((device) => {
+		devices.createDevice(outletId, deviceType, deviceName, deviceDescription, defaultSetting)
+		.then((device) => {
 			res.redirect('/device/list');
 		}).catch((err) => {
 			res.sendStatus(500);
@@ -152,9 +153,9 @@ module.exports = () => {
 	router.get('/list', (req, res) => {
 		devices.getAll().then((devs) => {
 			res.render('device/list', {
-				devices: _.sortBy(_.map(devs, (d) => {
+				devices: _.map(devs, (d) => {
 					return _.extend({}, d.dataValues, { ledClass: gpio.getOutlet(d.outletId).on ? 'green' : 'red' });
-				}), 'outletId')
+				})
 			});
 		}).catch((err) => {
 			res.sendStatus(500);

@@ -53,3 +53,33 @@
 	<input type="submit" value="{{ action|capitalize }}">
 </form>
 {% endblock %}
+
+{% block scripts %}
+<script>
+$(function(){
+	var $form = $('#device-create-form');
+	$form.submit(function(ev){
+		ev.preventDefault();
+		$.post($form.prop('action'), {
+			deviceId: $('.form-control[name="deviceId"]').val(),
+			deviceName: $('.form-control[name="deviceName"]').val(),
+			deviceType: $('.form-control[name="deviceType"]').val(),
+			outletId: $('.form-control[name="outletId"]').val(),
+			deviceDescription: $('.form-control[name="deviceDescription"]').val(),
+			defaultSetting: $('.form-control[name="defaultSetting"]').val()
+		})
+		.done(function(){
+			window.location.pathname = '/device/list';
+		})
+		.fail(function(err){
+			console.error();
+			swal({
+				type: 'error',
+				title: 'Error',
+				text: 'An error occurred while attempting to create the device'
+			});
+		});
+	});
+});
+</script>
+{% endblock %}
