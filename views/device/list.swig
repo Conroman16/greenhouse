@@ -54,6 +54,14 @@
 								<div class="item-value">{{ device.description }}</div>
 							</div>
 						</div>
+						<div class="row device-prop-list-item">
+							<div class="col-4">
+								<div class="item-title">Default State</div>
+							</div>
+							<div class="col-8 text-center">
+								<div class="item-value">{{ device.defaultSetting }}</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -114,8 +122,6 @@
 						});
 					});
 				}
-				else
-					swal("Cancelled", "Your imaginary file is safe :)", "error");
 			});
 		});
 	})

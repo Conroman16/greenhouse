@@ -33,11 +33,12 @@ module.exports = () => {
 		var deviceType = req.body.deviceType || '';
 		var deviceName = req.body.deviceName || '';
 		var deviceDescription = req.body.deviceDescription || '';
+		let defaultSetting = !!req.body.defaultSetting;
 
 		if (!outletId || !deviceType || !deviceName)
 			return res.sendStatus(500);
 
-		devices.createDevice(outletId, deviceType, deviceName, deviceDescription).then((device) => {
+		devices.createDevice(outletId, deviceType, deviceName, deviceDescription, defaultSetting).then((device) => {
 			res.redirect('/device/list');
 		}).catch((err) => {
 			res.sendStatus(500);
@@ -98,22 +99,34 @@ module.exports = () => {
 	router.post('/addagenda/:id', (req, res) => {
 		var deviceId = req.params.id;
 		if (!deviceId)
-			return res.status(500).redirect('/device/list');
+			return res.status(500).send({ error: 'Invalid device ID' });
 		else if (!req.body.timeString || !req.body.agendaName)
 			return res.status(500).send({ error: '"timeString" and "agendaName" must both be truthy' });
 
-		db.DeviceAgenda.create({
-			deviceId: deviceId,
-			agendaJobName: req.body.agendaName,
-			timeString: req.body.timeString
-		})
-		.catch((err) => {
-			console.error(err);
-			res.status(500).send(err);
-		})
-		.then((newDeviceAgenda) => {
-			res.send(newDeviceAgenda);
-		});
+		devices.addAgenda(deviceId, req.body.agendaName, req.body.timeString)
+			.catch((err) => {
+				console.error(err);
+				res.status(500).send(err);
+			})
+			.then((newDeviceAgenda) => {
+				res.send(newDeviceAgenda);
+			});
+	});
+
+	router.post('/deleteagenda/:agendaId', (req, res) => {
+		var agendaId = req.params.agendaId;
+		if (!agendaId)
+			return res.sendStatus(500);
+
+		devices.deleteAgenda(agendaId)
+			.catch((err) => {
+				console.error('ERROR', err);
+				res.status(500)
+					.send({ message: 'An error occurred while attempting to delete the agenda', error: err });
+			})
+			.then(() => {
+				res.sendStatus(200);
+			});
 	});
 
 	router.get('/details/:id', (req, res) => {

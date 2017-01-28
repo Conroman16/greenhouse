@@ -39,32 +39,40 @@
 		<div class="row">
 			<div class="col">
 				{% for agenda in Device.DeviceAgendas  %}
-				<table class="device-interval-info">
-					<tr>
-						<td class="title">Device Agenda ID</td>
-						<td>{{ agenda.id|default('--') }}</td>
-					</tr>
-					<tr>
-						<td class="title">Device ID</td>
-						<td>{{ agenda.deviceId|default('--') }}</td>
-					</tr>
-					<tr>
-						<td class="title">Agenda Job Name</td>
-						<td>{{ agenda.agendaJobName|default('--') }}</td>
-					</tr>
-					<tr>
-						<td class="title">Time String</td>
-						<td>{{ agenda.timeString|default('--') }}</td>
-					</tr>
-				</table>
+				<div class="row">
+					<div class="col-1"></div>
+					<div class="col">
+						<table class="col device-interval-info">
+							<tr>
+								<td class="title">Device Agenda ID</td>
+								<td>{{ agenda.id|default('--') }}</td>
+							</tr>
+							<tr>
+								<td class="title">Device ID</td>
+								<td>{{ agenda.deviceId|default('--') }}</td>
+							</tr>
+							<tr>
+								<td class="title">Agenda Job Name</td>
+								<td>{{ agenda.agendaJobName|default('--') }}</td>
+							</tr>
+							<tr>
+								<td class="title">Time String</td>
+								<td>{{ agenda.timeString|default('--') }}</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-1">
+						<button class="js-delete-btn btn btn-danger" data-agendaid="{{ agenda.id }}">X</button>
+					</div>
+				</div>
 				{% endfor %}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-1">
-				<button class=" js-add-agenda btn btn-success">+ Add</button>
+				<button class="js-add-agenda btn btn-success">+ Add</button>
 			</div>
-			<div class="col-11 device-agendas"></div>
+			<div class="col device-agendas"></div>
 		</div>
 	</div>
 </div>
@@ -80,7 +88,7 @@
 		</div>
 		<div class="form-group">
 			<label for="agendaName">Agenda Name</label>
-			<select name="agendaName">
+			<select name="agendaName" class="input">
 				{% for job in AllAgendaJobs %}
 					<option class="agenda-item" value="{{ job }}">{{ job }}</option>
 				{% endfor %}
@@ -97,28 +105,74 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.min.js"></script>
 <script src="/static/js/devices.js"></script>
 <script>
-	$('.js-add-agenda').click(function(){
-		var formPostUrl = '/device/addagenda/{{ id }}';
-		$('.device-agendas').html(templates.addDeviceForm({ action: formPostUrl }));
-		$('.add-device-form').submit(function(ev){
-			ev.preventDefault();
-			$.post(formPostUrl, {
-				timeString: $('.input[name="timeString"]').val(),
-				agendaName: $('.input[name="agendaName"]').val()
-			}, function(res){
-				console.log(res);
-				swal({
-					type: 'success',
-					title: 'Woot',
-					text: 'The form was submitted successfully'
+	$(function(){
+		$('.js-add-agenda').click(function(){
+			var formPostUrl = '/device/addagenda/{{ Device.id }}';
+			$('.device-agendas').html(templates.addDeviceForm({ action: formPostUrl }));
+			$('.add-device-form').submit(function(ev){
+				ev.preventDefault();
+				$.post(formPostUrl, {
+					timeString: $('.input[name="timeString"]').val(),
+					agendaName: $('.input[name="agendaName"]').val()
+				}, function(res){
+					swal({
+						type: 'success',
+						title: 'Woot!',
+						text: 'The agenda was created successfully'
+					},
+					function(){
+						window.location.reload();
+					});
+				}).fail(function(err){
+					console.error(err);
+					swal({
+						type: 'error',
+						title: 'Error',
+						text: 'There was an error creating the agenda'
+					},
+					function(){
+						window.location.reload();
+					});
 				});
-			}).catch(function(err){
-				console.error(err);
-				swal({
-					type: 'error',
-					title: 'Error',
-					text: 'There was an error submitting the form'
-				});
+			});
+		});
+
+		$('.js-delete-btn').click(function(){
+			var agendaId = JSON.parse($(this).data('agendaid'));
+			swal({
+				type: 'warning',
+				title: 'Are you sure?',
+				text: 'Are you sure you want to delete this agenda?  This cannot be undone!',
+				showCancelButton: true,
+				closeOnConfirm: false,
+				showLoaderOnConfirm: true,
+				confirmButtonColor: '#e74c3c',
+				confirmButtonText: 'Yes',
+				cancelButtonText: 'Nope'
+			}, function(isConfirm){
+				if (isConfirm){
+					$.post('/device/deleteagenda/' + agendaId, function(res){
+						swal({
+							type: 'success',
+							title: 'Success!',
+							text: 'The agenda was deleted successfully'
+						},
+						function(){
+							window.location.reload();
+						});
+					})
+					.fail(function(err){
+						console.error(err);
+						swal({
+							type: 'error',
+							title: 'Ah man!',
+							text: 'An error occurred while attempting to delete the agenda'
+						},
+						function(){
+							window.location.reload();
+						});
+					});
+				}
 			});
 		});
 	});
