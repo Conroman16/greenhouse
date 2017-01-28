@@ -38,13 +38,13 @@
 		<label>Default State</label><br>
 		<div class="form-check form-check-inline">
 			<label class="form-check-label">
-				<input type="radio" name="defaultSetting" value="0" checked>
+				<input class="form-control" type="radio" name="defaultSetting" value="0" checked>
 				Off
 			</label>
 		</div>
 		<div class="form-check form-check-inline">
 			<label class="form-check-label">
-				<input type="radio" name="defaultSetting" value="1">
+				<input class="form-control" type="radio" name="defaultSetting" value="1">
 				On
 			</label>
 		</div>
@@ -61,12 +61,12 @@ $(function(){
 	$form.submit(function(ev){
 		ev.preventDefault();
 		$.post($form.prop('action'), {
-			deviceId: $('.form-control[name="deviceId"]').val(),
+			deviceId: $('input[name="deviceId"]').val(),
 			deviceName: $('.form-control[name="deviceName"]').val(),
 			deviceType: $('.form-control[name="deviceType"]').val(),
 			outletId: $('.form-control[name="outletId"]').val(),
 			deviceDescription: $('.form-control[name="deviceDescription"]').val(),
-			defaultSetting: $('.form-control[name="defaultSetting"]').val()
+			defaultSetting: !!JSON.parse($('.form-control[name="defaultSetting"]:checked').val())
 		})
 		.done(function(){
 			window.location.pathname = '/device/list';

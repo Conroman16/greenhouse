@@ -110,7 +110,8 @@
 							type: 'success',
 							title: 'Success',
 							text: '<strong>' + deviceName + '</strong> was deleted successfully',
-							html: true
+							html: true,
+							timer: 750
 						});
 					})
 					.catch(function(err){

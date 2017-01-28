@@ -33,7 +33,7 @@ module.exports = () => {
 		var deviceType = req.body.deviceType || '';
 		var deviceName = req.body.deviceName || '';
 		var deviceDescription = req.body.deviceDescription || '';
-		let defaultSetting = !!req.body.defaultSetting;
+		let defaultSetting = !!JSON.parse(req.body.defaultSetting);
 
 		if (!outletId || !deviceType || !deviceName)
 			return res.sendStatus(500);
