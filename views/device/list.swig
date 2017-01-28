@@ -5,7 +5,7 @@
 	<a class="btn btn-secondary" href="/device/create">Create</a>
 	<div class="row">
 		{% for device in devices %}
-		<div class="card col device-item device-{{ device.id }} outlet-{{ device.outletId }}" data-deviceid="{{ device.id }}">
+		<div class="card col-sm device-item device-{{ device.id }} outlet-{{ device.outletId }}" data-deviceid="{{ device.id }}">
 			<div class="card-block">
 				<div class="row">
 					<div class="col">
