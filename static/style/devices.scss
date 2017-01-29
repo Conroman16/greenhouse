@@ -14,7 +14,15 @@
 
 .item-title{
 	font-weight: bold;
-	text-align: right;
+}
+
+.device-prop-list-item{
+	.left-col{
+		text-align: right;
+	}
+	.right-col{
+		text-align: left;
+	}
 }
 
 table{

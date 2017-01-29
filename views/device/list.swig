@@ -15,61 +15,45 @@
 					</div>
 					<div class="row">
 						<div class="col device-prop-list">
-							{# <div class="row device-prop-list-item">
-								<div class="col-4">
-									<div class="item-title">Device ID</div>
-								</div>
-								<div class="col-8 text-center">
-									<div class="item-value">{{ device.id }}</div>
-								</div>
-							</div> #}
 							<div class="row device-prop-list-item">
-								<div class="col-4">
+								<div class="col-4 left-col">
 									<div class="item-title">Outlet</div>
 								</div>
-								<div class="col-8 text-center">
+								<div class="col-8 right-col">
 									<div class="item-value">{{ device.outletId }}</div>
 								</div>
 							</div>
 							<div class="row device-prop-list-item">
-								<div class="col-4">
+								<div class="col-4 left-col">
 									<div class="item-title">Name</div>
 								</div>
-								<div class="col-8 text-center">
+								<div class="col-8 right-col">
 									<div class="item-value">{{ device.name }}</div>
 								</div>
 							</div>
 							<div class="row device-prop-list-item">
-								<div class="col-4">
+								<div class="col-4 left-col">
 									<div class="item-title">Type</div>
 								</div>
-								<div class="col-8 text-center">
+								<div class="col-8 right-col">
 									<div class="item-value">{{ device.type|capitalize }}</div>
 								</div>
 							</div>
 							<div class="row device-prop-list-item">
-								<div class="col-4">
+								<div class="col-4 left-col">
 									<div class="item-title">Description</div>
 								</div>
-								<div class="col-8 text-center">
+								<div class="col-8 right-col">
 									<div class="item-value">{{ device.description }}</div>
 								</div>
 							</div>
-							{# <div class="row device-prop-list-item">
-								<div class="col-4">
-									<div class="item-title">Default State</div>
-								</div>
-								<div class="col-8 text-center">
-									<div class="item-value">{{ device.defaultSetting }}</div>
-								</div>
-							</div> #}
 						</div>
 					</div>
 				</div>
 				<div class="card-footer text-center">
-					<a href="/device/details/{{ device.id }}" class="btn btn-info">Details</a>
-					&nbsp;&nbsp;
 					<a href="#" class="js-delete btn btn-danger" data-deviceid="{{ device.id }}" data-devicename="{{ device.name }}">Delete</a>
+					&nbsp;&nbsp;
+					<a href="/device/details/{{ device.id }}" class="btn btn-info">Details</a>
 				</div>
 			</div>
 		</div>
