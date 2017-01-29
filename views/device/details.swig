@@ -6,7 +6,7 @@
 		<a class="btn btn-secondary" href="/device/list">Back to list</a>
 		<div class="row">
 			<div class="col">
-				<div class="device-status led {{ Device.ledClass }} device-toggle"></div>
+				<div class="device-status led {{ Device.ledClass }} device-toggle outlet-{{ Device.outletId }}" data-deviceid="{{ Device.id }}"></div>
 			</div>
 		</div>
 		<div class="row">
@@ -31,6 +31,10 @@
 					<tr>
 						<td class="item-title">Description</td>
 						<td class="item-value">{{ Device.description|default('--') }}</td>
+					</tr>
+					<tr>
+						<td class="item-title">Default State</td>
+						<td class="item-value">{{ Device.defaultSetting }}</td>
 					</tr>
 				</table>
 			</div>

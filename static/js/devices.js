@@ -4,7 +4,9 @@ $(function(){
 
 	function toggleLed(id){
 		var device = $(`.outlet-${id}`);
-		device.find('.device-status').toggleClass('red green');
+		if (!device.is('.device-status'))
+			device = device.find('.device-status');
+		device.toggleClass('red green');
 	}
 
 	socket.on('deviceOn', function(data){
@@ -29,7 +31,8 @@ $(function(){
 	});
 
 	$('.device-toggle').click(function(e){
-		var deviceID = $(e.target).closest('.device-item').data('deviceid');
-		$.post(window.location.pathname + '/toggle', { deviceId: deviceID });
+		var dID = $(e.target).data('deviceid');
+		var deviceID = dID || $(e.target).closest('.device-item').data('deviceid');
+		$.post('/device/toggle', { deviceId: deviceID });
 	});
 });

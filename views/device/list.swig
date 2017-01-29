@@ -15,17 +15,17 @@
 					</div>
 					<div class="row">
 						<div class="col device-prop-list">
-							<div class="row device-prop-list-item">
+							{# <div class="row device-prop-list-item">
 								<div class="col-4">
 									<div class="item-title">Device ID</div>
 								</div>
 								<div class="col-8 text-center">
 									<div class="item-value">{{ device.id }}</div>
 								</div>
-							</div>
+							</div> #}
 							<div class="row device-prop-list-item">
 								<div class="col-4">
-									<div class="item-title">Outlet ID</div>
+									<div class="item-title">Outlet</div>
 								</div>
 								<div class="col-8 text-center">
 									<div class="item-value">{{ device.outletId }}</div>
@@ -44,7 +44,7 @@
 									<div class="item-title">Type</div>
 								</div>
 								<div class="col-8 text-center">
-									<div class="item-value">{{ device.type }}</div>
+									<div class="item-value">{{ device.type|capitalize }}</div>
 								</div>
 							</div>
 							<div class="row device-prop-list-item">
@@ -55,14 +55,14 @@
 									<div class="item-value">{{ device.description }}</div>
 								</div>
 							</div>
-							<div class="row device-prop-list-item">
+							{# <div class="row device-prop-list-item">
 								<div class="col-4">
 									<div class="item-title">Default State</div>
 								</div>
 								<div class="col-8 text-center">
 									<div class="item-value">{{ device.defaultSetting }}</div>
 								</div>
-							</div>
+							</div> #}
 						</div>
 					</div>
 				</div>

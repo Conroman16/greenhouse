@@ -173,13 +173,18 @@ module.exports = () => {
 			.catch((err) => res.sendStatus(500, err));
 	});
 
-	router.post('/list/toggle', (req, res) => {
+	router.post('/toggle', (req, res) => {
 		var deviceId = req.body.deviceId;
 		if (!deviceId)
-			return res.sendStatus(500);
+			return res.status(500).redirect('/device/list');
 
-		devices.toggleDevice(deviceId);
-		res.sendStatus(200);
+		devices.toggleDevice(deviceId)
+			.then(() => res.sendStatus(200))
+			.catch((err) => res.status(500).send({
+				success: false,
+				message: 'Unable to toggle device',
+				error: err
+			}));
 	});
 
 	let io,
