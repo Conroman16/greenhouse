@@ -13,6 +13,10 @@ module.exports = () => {
 		res.render('index/index');
 	});
 
+	router.get('/cam', (req, res) => {
+		res.render('index/cam', { url: config.webcamUrl });
+	});
+
 	router.get(/\/(shutdown|restart)+/i, (req, res) => {
 		res.render('index/action', {
 			action: req.params[0]
