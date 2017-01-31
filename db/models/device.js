@@ -9,7 +9,12 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		outletId: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
+			allowNull: true,
+			unique: true
+		},
+		sensorId: {
+			type: DataTypes.INTEGER,
+			allowNull: true,
 			unique: true
 		},
 		name: {
@@ -40,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
 				Device.hasMany(models.DeviceAgenda, {
 					foreignKey: 'deviceId'
 				});
+				Device.hasMany(models.TemperatureLog)
 			}
 		}
 	});

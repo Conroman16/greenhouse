@@ -1,7 +1,6 @@
 var router = require('express').Router();
-var config = require('../lib/config');
 var childProcess = require('child_process');
-var util = require('../lib/util');
+let gpio = require('../lib/gpio')
 
 function execCommand(command, cb){
 	return childProcess.exec(command, cb);
@@ -9,8 +8,19 @@ function execCommand(command, cb){
 
 module.exports = () => {
 
-	router.get('/', (req, res) => {
-		res.render('index/index');
+	router.get('/', (req, res) => res.render('index/index'));
+
+	router.get('/th/:pin', (req, res) => {
+		let p = JSON.parse(req.params.pin);
+		gpio.readSensor(p)
+			.catch((err) => res.status(500).send(err))
+			.then((data) => res.send(data));
+	});
+
+	router.get('/allth', (req, res) => {
+		gpio.readAllSensors()
+			.catch((err) => res.status(500).send(err))
+			.then((sensorData) => res.send(sensorData));
 	});
 
 	router.get('/cam', (req, res) => {
