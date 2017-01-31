@@ -53,7 +53,9 @@
 				<div class="card-footer text-center">
 					<a href="#" class="js-delete btn btn-danger" data-deviceid="{{ device.id }}" data-devicename="{{ device.name }}">Delete</a>
 					&nbsp;&nbsp;
-					<a href="#" class="js-pause btn btn-info" data-deviceid="{{ device.id }}" data-devicename="{{ device.name }}">Pause</a>
+					<a href="#" class="js-pause btn btn-secondary" data-deviceid="{{ device.id }}" data-devicename="{{ device.name }}">Pause</a>
+					&nbsp;&nbsp;
+					<a href="/device/edit/{{ device.id }}" class="btn btn-secondary">Edit</a>
 					&nbsp;&nbsp;
 					<a href="/device/details/{{ device.id }}" class="btn btn-info">Details</a>
 				</div>

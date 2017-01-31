@@ -29,11 +29,12 @@ module.exports = () => {
 	});
 
 	router.post('/create', (req, res) => {
-		var outletId = req.body.outletId || '';
-		var deviceType = req.body.deviceType || '';
-		var deviceName = req.body.deviceName || '';
-		var deviceDescription = req.body.deviceDescription || '';
+		let outletId = req.body.outletId;
+		let deviceType = req.body.deviceType;
+		let deviceName = req.body.deviceName;
+		let deviceDescription = req.body.deviceDescription;
 		let defaultSetting = !!JSON.parse(req.body.defaultSetting);
+		let isPaused = req.body.isPaused;
 
 		if (!outletId || !deviceType || !deviceName)
 			return res.sendStatus(500);
@@ -48,11 +49,13 @@ module.exports = () => {
 	});
 
 	router.post('/edit', (req, res) => {
-		var deviceId = req.body.deviceId;
-		var outletId = req.body.outletId || '';
-		var deviceType = req.body.deviceType || '';
-		var deviceName = req.body.deviceName || '';
-		var deviceDescription = req.body.deviceDescription || '';
+		let deviceId = req.body.deviceId;
+		let outletId = req.body.outletId;
+		let deviceType = req.body.deviceType;
+		let deviceName = req.body.deviceName;
+		let deviceDescription = req.body.deviceDescription;
+		let defaultSetting = !!JSON.parse(req.body.defaultSetting);
+		let isPaused = req.body.isPaused;
 
 		if (!deviceId || deviceId == -1 || !outletId || !deviceType || !deviceName)
 			return res.sendStatus(500);
@@ -62,9 +65,11 @@ module.exports = () => {
 			outletId: outletId,
 			type: deviceType,
 			name: deviceName,
-			description: deviceDescription
+			description: deviceDescription,
+			defaultSetting: defaultSetting,
+			isPaused: isPaused
 		}).then((updatedDevice) => {
-			res.redirect(`/device/details/${deviceId}`);
+			res.sendStatus(200);
 		}).catch((err) => {
 			res.sendStatus(500);
 			console.error(err);
