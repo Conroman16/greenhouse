@@ -33,16 +33,16 @@ setTimeout(() => {
 				.catch((err) => next(err))
 				.then(() => next());
 		},
-		// (next) => {
-		// 	require('./lib/weather').init();
-		// 	next();
-		// },
 		(next) => {
-			server.start();
+			scheduler.init();
 			next();
 		},
 		(next) => {
-			scheduler.init();
+			require('./lib/weather').init();
+			next();
+		},
+		(next) => {
+			server.start();
 			next();
 		}
 	],

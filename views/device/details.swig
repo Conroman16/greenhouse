@@ -36,6 +36,11 @@
 						<td class="item-title">Default State</td>
 						<td class="item-value">{{ Device.defaultSetting }}</td>
 					</tr>
+					</tr>
+					<tr>
+						<td class="item-title">Is Paused</td>
+						<td class="item-value">{{ Device.isPaused }}</td>
+					</tr>
 				</table>
 			</div>
 		</div>
@@ -74,7 +79,7 @@
 		</div>
 		<div class="row">
 			<div class="col-1">
-				<button class="js-add-agenda btn btn-success">+ Add</button>
+				<button class="js-add-agenda btn btn-success" data-deviceid="{{ Device.id }}">+ Add</button>
 			</div>
 			<div class="col device-agendas"></div>
 		</div>
@@ -94,7 +99,7 @@
 			<label for="agendaName">Agenda Name</label>
 			<select name="agendaName" class="input">
 				{% for job in AllAgendaJobs %}
-					<option class="agenda-item" value="{{ job }}">{{ job }}</option>
+					<option class="agenda-item" value="{{ job.value }}">{{ job.text }}</option>
 				{% endfor %}
 			</select>
 		</div>
@@ -107,78 +112,6 @@
 
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.min.js"></script>
-<script src="/static/js/devices.js"></script>
-<script>
-	$(function(){
-		$('.js-add-agenda').click(function(){
-			var formPostUrl = '/device/addagenda/{{ Device.id }}';
-			$('.device-agendas').html(templates.addDeviceForm({ action: formPostUrl }));
-			$('.add-device-form').submit(function(ev){
-				ev.preventDefault();
-				$.post(formPostUrl, {
-					timeString: $('.input[name="timeString"]').val(),
-					agendaName: $('.input[name="agendaName"]').val()
-				}, function(res){
-					swal({
-						type: 'success',
-						title: 'Woot!',
-						text: 'The agenda was created successfully'
-					},
-					function(){
-						window.location.reload();
-					});
-				}).fail(function(err){
-					console.error(err);
-					swal({
-						type: 'error',
-						title: 'Error',
-						text: 'There was an error creating the agenda'
-					},
-					function(){
-						window.location.reload();
-					});
-				});
-			});
-		});
-
-		$('.js-delete-btn').click(function(){
-			var agendaId = JSON.parse($(this).data('agendaid'));
-			swal({
-				type: 'warning',
-				title: 'Are you sure?',
-				text: 'Are you sure you want to delete this agenda?  This cannot be undone!',
-				showCancelButton: true,
-				closeOnConfirm: false,
-				showLoaderOnConfirm: true,
-				confirmButtonColor: '#e74c3c',
-				confirmButtonText: 'Yes',
-				cancelButtonText: 'Nope'
-			}, function(isConfirm){
-				if (isConfirm){
-					$.post('/device/deleteagenda/' + agendaId, function(res){
-						swal({
-							type: 'success',
-							title: 'Success!',
-							text: 'The agenda was deleted successfully'
-						},
-						function(){
-							window.location.reload();
-						});
-					})
-					.fail(function(err){
-						console.error(err);
-						swal({
-							type: 'error',
-							title: 'Ah man!',
-							text: 'An error occurred while attempting to delete the agenda'
-						},
-						function(){
-							window.location.reload();
-						});
-					});
-				}
-			});
-		});
-	});
-</script>
+<script src="/static/js/device/devices.js"></script>
+<script src="/static/js/device/details.js"></script>
 {% endblock %}

@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
 		timeString: {
 			type: DataTypes.STRING,
 			allowNull: false
+		},
+		isPaused: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
 		}
 	}, {
 		classMethods: {

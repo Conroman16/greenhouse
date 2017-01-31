@@ -1,13 +1,13 @@
-var _ = require('underscore');
-var router = require('express').Router();
-var viewData = require('../lib/viewdata');
-var config = require('../lib/config');
-var server = require('../lib/server');
-var gpio = require('../lib/gpio');
-var devices = require('../lib/device');
-var scheduler = require('../lib/scheduler');
-var _ = require('underscore');
+let _ = require('underscore');
+let router = require('express').Router();
+let viewData = require('../lib/viewdata');
+let config = require('../lib/config');
+let server = require('../lib/server');
+let gpio = require('../lib/gpio');
+let devices = require('../lib/device');
+let scheduler = require('../lib/scheduler');
 let db = require('../db');
+let async = require('async');
 
 module.exports = () => {
 
@@ -139,7 +139,10 @@ module.exports = () => {
 			var device = _.extend({}, dev.dataValues, {
 				ledClass: gpio.getOutlet(dev.outletId).on ? 'green' : 'red'
 			});
-			let jobs = Object.keys(scheduler.jobs);
+			// let jobs = Object.keys(scheduler.jobs);
+			let jobs = [
+				{ value: 'toggleDevice', text: 'Interval' }
+			];
 			res.render('device/details', {
 				AllAgendaJobs: jobs,
 				Device: device
@@ -185,6 +188,12 @@ module.exports = () => {
 				message: 'Unable to toggle device',
 				error: err
 			}));
+	});
+
+	router.post('/pause', (req, res) => {
+		let deviceId = req.body.deviceId;
+		if (!deviceId)
+			return res.sendStatus(500);
 	});
 
 	let io,
