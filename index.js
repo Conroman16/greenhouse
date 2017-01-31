@@ -10,19 +10,15 @@ let db = require('./db');
 let server = require('./lib/server');
 let scheduler = require('./lib/scheduler');
 let device = require('./lib/device');
+let weather = require('./lib/weather');
 
 // Suppress bluebird warnings because I couldn't give a fuck about them and they make my logs hard to read
 let bluebird = require('bluebird').config({ warnings: false });
 
 setTimeout(() => {
 	async.series([
-		(next) => {
-			events.init();
-			next();
-		},
-		(next) => {
-			gpio.init(next);
-		},
+		(next) => events.init(next),
+		(next) => gpio.init(next),
 		(next) => {
 			db.sequelize.sync()
 				.catch((err) => next(err))
@@ -33,21 +29,12 @@ setTimeout(() => {
 				.catch((err) => next(err))
 				.then(() => next());
 		},
-		(next) => {
-			scheduler.init();
-			next();
-		},
-		(next) => {
-			require('./lib/weather').init();
-			next();
-		},
-		(next) => {
-			server.start();
-			next();
-		}
+		(next) => weather.init(next),
+		(next) => server.start(next),
+		(next) => scheduler.init(next)
 	],
 	(err, results) => {
 		if (err)
-			console.error('There were errors during startup');
+			console.error('There were errors during startup', err);
 	});
 });

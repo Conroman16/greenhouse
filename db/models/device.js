@@ -45,7 +45,9 @@ module.exports = (sequelize, DataTypes) => {
 				Device.hasMany(models.DeviceAgenda, {
 					foreignKey: 'deviceId'
 				});
-				Device.hasMany(models.TemperatureLog)
+				Device.hasMany(models.TemperatureLog, {
+					foreignKey: 'tempLogId'
+				});
 			}
 		}
 	});
