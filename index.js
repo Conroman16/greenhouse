@@ -19,6 +19,7 @@ setTimeout(() => {
 	async.series([
 		(next) => events.init(next),
 		(next) => gpio.init(next),
+		(next) => weather.init(next),
 		(next) => {
 			db.sequelize.sync()
 				.catch((err) => next(err))
@@ -29,9 +30,8 @@ setTimeout(() => {
 				.catch((err) => next(err))
 				.then(() => next());
 		},
-		(next) => weather.init(next),
-		(next) => server.start(next),
-		(next) => scheduler.init(next)
+		(next) => scheduler.init(next),
+		(next) => server.start(next)
 	],
 	(err, results) => {
 		if (err)

@@ -13,6 +13,7 @@
   "author": "Connor Kennedy",
   "license": "MIT",
   "dependencies": {
+    "agendash": "^0.4.0",
     "async": "^2.1.4",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
