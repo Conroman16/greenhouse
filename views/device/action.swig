@@ -37,27 +37,37 @@
 				<select class="form-control" name="outletId" required>
 					<option value="-1"></option>
 					{% for o in Outlets %}
-					<option value="{{ o.Value }}"{% if o.Selected %} selected{% endif %}>{{ o.Value }}</option>
+					<option value="{{ o.Value }}"{% if o.Selected %} selected{% endif %}>{{ o.Name|default(o.Value) }}</option>
+					{% endfor %}
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="sensorId">Sensor:</label>
+				<select class="form-control" name="sensorId" required>
+					<option value="-1"></option>
+					{% for s in Sensors %}
+					<option value="{{ s.Value }}"{% if s.Selected %} selected{% endif %}>{{ s.Name|default(s.Value) }}</option>
 					{% endfor %}
 				</select>
 			</div>
 
 			<div class="form-group">
 				<label for="deviceDescription">Description:</label>
-				<textarea class="form-control" name="deviceDescription">{% if device %}{{ device.description|default('') }}{% endif %}</textarea>
+				<textarea class="form-control" name="deviceDescription">{{ device.description|default('') }}</textarea>
 			</div>
 
 			<div class="form-group">
 				<label>Default State</label><br>
 				<div class="form-check form-check-inline">
 					<label class="form-check-label">
-						<input class="form-control" type="radio" name="defaultSetting" value="0" checked>
+						<input class="form-control" type="radio" name="defaultSetting" value="0"{% if device.defaultSetting|not %} checked{% endif %}>
 						Off
 					</label>
 				</div>
 				<div class="form-check form-check-inline">
 					<label class="form-check-label">
-						<input class="form-control" type="radio" name="defaultSetting" value="1">
+						<input class="form-control" type="radio" name="defaultSetting" value="1"{% if device.defaultSetting %} checked{% endif %}>
 						On
 					</label>
 				</div>
@@ -67,13 +77,13 @@
 				<label>Is Paused?</label><br>
 				<div class="form-check form-check-inline">
 					<label class="form-check-label">
-						<input class="form-control" type="radio" name="isPaused" value="0" checked>
+						<input class="form-control" type="radio" name="isPaused" value="0"{% if device.isPaused|not %} checked{% endif %}>
 						No
 					</label>
 				</div>
 				<div class="form-check form-check-inline">
 					<label class="form-check-label">
-						<input class="form-control" type="radio" name="isPaused" value="1">
+						<input class="form-control" type="radio" name="isPaused" value="1"{% if device.isPaused %} checked{% endif %}>
 						Yes
 					</label>
 				</div>
@@ -97,6 +107,7 @@ $(function(){
 			deviceName: $('.form-control[name="deviceName"]').val(),
 			deviceType: $('.form-control[name="deviceType"]').val(),
 			outletId: $('.form-control[name="outletId"]').val(),
+			sensorId: $('.form-control[name="sensorId"]').val(),
 			deviceDescription: $('.form-control[name="deviceDescription"]').val(),
 			defaultSetting: !!JSON.parse($('.form-control[name="defaultSetting"]:checked').val()),
 			isPaused: !!JSON.parse($('.form-control[name="isPaused"]:checked').val())

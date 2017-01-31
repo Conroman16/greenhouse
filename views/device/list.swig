@@ -51,9 +51,9 @@
 					</div>
 				</div>
 				<div class="card-footer text-center">
-					<a href="#" class="js-delete btn btn-danger" data-deviceid="{{ device.id }}" data-devicename="{{ device.name }}">Delete</a>
+					<a href="#" class="js-delete btn btn-danger" data-deviceid="{{ device.id }}">Delete</a>
 					&nbsp;&nbsp;
-					<a href="#" class="js-pause btn btn-secondary" data-deviceid="{{ device.id }}" data-devicename="{{ device.name }}">Pause</a>
+					<a href="#" class="device-pause-toggle btn btn-secondary" data-deviceid="{{ device.id }}">Pause</a>
 					&nbsp;&nbsp;
 					<a href="/device/edit/{{ device.id }}" class="btn btn-secondary">Edit</a>
 					&nbsp;&nbsp;

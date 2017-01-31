@@ -17,7 +17,7 @@ $(function(){
 		},
 		function(isConfirm){
 			if (isConfirm) {
-				$.post(window.location.origin + '/device/delete', {
+				$.post('/device/delete', {
 					deviceId: deviceId
 				}, function(){
 					$('.device-' + deviceId).css('opacity', 0);

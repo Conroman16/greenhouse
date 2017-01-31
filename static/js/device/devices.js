@@ -35,4 +35,31 @@ $(function(){
 		var deviceID = dID || $(e.target).closest('.device-item').data('deviceid');
 		$.post('/device/toggle', { deviceId: deviceID });
 	});
+
+	$('.device-pause-toggle').click(function(){
+		var $this = $(this);
+		var deviceId = $this.data('deviceid');
+		var isPaused = $this.hasClass('paused');
+		var url = '/device/';
+		var data = { deviceId: deviceId };
+		if (isPaused)
+			url += 'unpause';
+		else
+			url += 'pause';
+
+		$.post(url, data)
+			.fail(function(err){
+				console.error(err);
+				swal({
+					type: 'error',
+					title: 'Error!',
+					text: 'Unable to unpause device'
+				});
+			})
+			.done(function(){
+				let newBtnTxt = isPaused ? 'Pause' : 'Unpause';
+				$this.text(newBtnTxt);
+				$this.toggleClass('paused');
+			});
+	});
 });
