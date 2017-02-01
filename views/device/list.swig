@@ -9,12 +9,21 @@
 			<div class="card device-item device-{{ device.id }} outlet-{{ device.outletId }}" data-deviceid="{{ device.id }}">
 				<div class="card-block">
 					<div class="row">
-						<div class="col">
-							<div class="device-status led {{ device.ledClass }} device-toggle"></div>
+						<div class="col device-header">
+							{% if device.outletId %}
+								<div class="device-status led {{ device.ledClass }} device-toggle"></div>
+							{% endif %}
+							{% if device.sensorId %}
+								<div class="device-status climate">
+									<span class="temp">{{ device.temperature|default('--') }} °F</span>
+									<span class="humidity">{{ device.humidity|default('--') }}%</span>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col device-prop-list">
+						{% if device.outletId %}
 							<div class="row device-prop-list-item">
 								<div class="col-4 left-col">
 									<div class="item-title">Outlet</div>
@@ -23,6 +32,17 @@
 									<div class="item-value">{{ device.outletId }}</div>
 								</div>
 							</div>
+						{% endif %}
+						{% if device.sensorId %}
+							<div class="row device-prop-list-item">
+								<div class="col-4 left-col">
+									<div class="item-title">Sensor</div>
+								</div>
+								<div class="col-8 right-col">
+									<div class="item-value">{{ device.sensorId }}</div>
+								</div>
+							</div>
+						{% endif %}
 							<div class="row device-prop-list-item">
 								<div class="col-4 left-col">
 									<div class="item-title">Name</div>
@@ -36,7 +56,7 @@
 									<div class="item-title">Type</div>
 								</div>
 								<div class="col-8 right-col">
-									<div class="item-value">{{ device.type|capitalize }}</div>
+									<div class="item-value">{{ device.type|capfirst }}</div>
 								</div>
 							</div>
 							<div class="row device-prop-list-item">
@@ -52,11 +72,8 @@
 				</div>
 				<div class="card-footer text-center">
 					<a href="#" class="js-delete btn btn-danger" data-deviceid="{{ device.id }}">Delete</a>
-					&nbsp;&nbsp;
 					<a href="#" class="device-pause-toggle btn btn-secondary" data-deviceid="{{ device.id }}">Pause</a>
-					&nbsp;&nbsp;
 					<a href="/device/edit/{{ device.id }}" class="btn btn-secondary">Edit</a>
-					&nbsp;&nbsp;
 					<a href="/device/details/{{ device.id }}" class="btn btn-info">Details</a>
 				</div>
 			</div>

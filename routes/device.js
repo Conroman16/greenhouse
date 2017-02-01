@@ -215,20 +215,48 @@ module.exports = () => {
 	});
 
 	router.get('/list', (req, res) => {
-		devices.getAll().then((devs) => {
-			res.render('device/list', {
-				devices: _.map(devs, (d) => {
-					d = d.dataValues;
-					if (d.outletId)
-						_.extend(d, { ledClass: gpio.getOutlet(d.outletId).on ? 'green' : 'red' });
-					// else if (d.sensorId)
-						// _.extend();
-					return d;
-				})
-			});
-		}).catch((err) => {
-			res.sendStatus(500);
-			console.error(err);
+		let vd = {};
+		async.waterfall([
+			(next) => {
+				devices.getAll()
+					.catch((err) => next(err))
+					.then((devs) => next(null, devs));
+			},
+			(devs, next) => {
+				let ds = [];
+				async.map(devs, (d, callback) => {
+					let rv = {};
+					if (d.sensorId && d.sensorId !== -1){
+						gpio.readSensor(d.sensorId)
+							.catch((e) => callback(e))
+							.then((sd) => {
+								Object.assign(rv, d.dataValues, sd);
+								ds.push(rv);
+								callback();
+							});
+					}
+					else if (d.outletId && d.outletId !== -1){
+						Object.assign(rv, d.dataValues, {
+							ledClass: gpio.getOutlet(d.outletId).on ? 'green' : 'red'
+						});
+						ds.push(rv);
+						callback();
+					}
+				},
+				(err, rs) => {
+					if (err)
+						return next(err);
+					Object.assign(vd, { devices: ds });
+					return next();
+				});
+			}
+		],
+		(err, results) => {
+			if (err){
+				console.error(err);
+				return res.status(500).send(err);
+			}
+			return res.render('device/list', vd);
 		});
 	});
 
@@ -239,7 +267,10 @@ module.exports = () => {
 
 		devices.delete(deviceId)
 			.then(() => res.sendStatus(200))
-			.catch((err) => res.sendStatus(500, err));
+			.catch((err) => {
+				console.log('hi', err);
+				res.status(500).send(err);
+			});
 	});
 
 	router.post('/toggle', (req, res) => {

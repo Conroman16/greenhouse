@@ -12,7 +12,7 @@ let scheduler = require('./lib/scheduler');
 let device = require('./lib/device');
 let weather = require('./lib/weather');
 
-// Suppress bluebird warnings because I couldn't give a fuck about them and they make my logs hard to read
+// Suppress bluebird warnings
 let bluebird = require('bluebird').config({ warnings: false });
 
 setTimeout(() => {
