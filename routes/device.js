@@ -199,7 +199,9 @@ module.exports = () => {
 				});
 			}
 			let jobs = [
-				{ value: 'toggleDevice', text: 'Interval' }
+				{ value: 'toggleDevice', text: 'Set Interval' },
+				{ value: 'deviceOn', text: 'Turn On' },
+				{ value: 'deviceOff', text: 'Turn Off' }
 			];
 			res.render('device/details', {
 				AllAgendaJobs: jobs,
