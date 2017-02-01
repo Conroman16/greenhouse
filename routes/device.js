@@ -246,7 +246,8 @@ module.exports = () => {
 				(err, rs) => {
 					if (err)
 						return next(err);
-					Object.assign(vd, { devices: ds });
+					let sortedDevs = _.sortBy(ds, 'type');
+					Object.assign(vd, { devices: sortedDevs });
 					return next();
 				});
 			}
@@ -256,6 +257,7 @@ module.exports = () => {
 				console.error(err);
 				return res.status(500).send(err);
 			}
+
 			return res.render('device/list', vd);
 		});
 	});
