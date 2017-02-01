@@ -181,12 +181,9 @@ module.exports = () => {
 		devices.deleteAgenda(agendaId)
 			.catch((err) => {
 				console.error('ERROR', err);
-				res.status(500)
-					.send({ message: 'An error occurred while attempting to delete the agenda', error: err });
+				res.status(500).send({ message: 'An error occurred while attempting to delete the agenda', error: err });
 			})
-			.then(() => {
-				res.sendStatus(200);
-			});
+			.then(() => res.sendStatus(200));
 	});
 
 	router.get('/details/:id', (req, res) => {
@@ -197,7 +194,7 @@ module.exports = () => {
 		devices.get(deviceId, true).then((dev) => {
 			let device = dev.dataValues;
 			if (device.outletId){
-				_.extend(device, {
+				Object.assign(device, {
 					ledClass: gpio.getOutlet(dev.outletId).on ? 'green' : 'red'
 				});
 			}
@@ -257,7 +254,6 @@ module.exports = () => {
 				console.error(err);
 				return res.status(500).send(err);
 			}
-
 			return res.render('device/list', vd);
 		});
 	});
@@ -270,7 +266,7 @@ module.exports = () => {
 		devices.delete(deviceId)
 			.then(() => res.sendStatus(200))
 			.catch((err) => {
-				console.log('hi', err);
+				console.error(err);
 				res.status(500).send(err);
 			});
 	});
@@ -290,7 +286,6 @@ module.exports = () => {
 	});
 
 	router.post('/pause', (req, res) => {
-		console.log('HI', req.body);
 		let deviceId = req.body.deviceId;
 		if (!deviceId)
 			return res.sendStatus(500);
@@ -304,7 +299,6 @@ module.exports = () => {
 	});
 
 	router.post('/unpause', (req, res) => {
-		console.log('HEY', req.body);
 		let deviceId = req.body.deviceId;
 		if (!deviceId)
 			return res.sendStatus(500);
