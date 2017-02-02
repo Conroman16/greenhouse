@@ -156,8 +156,8 @@ module.exports = () => {
 		});
 	});
 
-	router.post('/addagenda/:id', (req, res) => {
-		var deviceId = req.params.id;
+	router.post('/addagenda', (req, res) => {
+		var deviceId = req.body.deviceId;
 		if (!deviceId)
 			return res.status(500).send({ error: 'Invalid device ID' });
 		else if (!req.body.timeString || !req.body.agendaName)
@@ -173,8 +173,8 @@ module.exports = () => {
 			});
 	});
 
-	router.post('/deleteagenda/:agendaId', (req, res) => {
-		var agendaId = req.params.agendaId;
+	router.post('/deleteagenda/', (req, res) => {
+		var agendaId = req.body.agendaId;
 		if (!agendaId)
 			return res.sendStatus(500);
 

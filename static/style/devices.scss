@@ -65,7 +65,8 @@ table{
 		padding: 0 1em;
 		width: 50%;
 
-		&.title{
+		&.title,
+		&.item-title{
 			text-align: right;
 		}
 	}

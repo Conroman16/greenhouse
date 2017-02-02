@@ -1,11 +1,12 @@
 $(function(){
 	$('.js-add-agenda').click(function(){
 		var deviceId = $(this).data('deviceid');
-		var formPostUrl = '/device/addagenda/' + deviceId;
+		var formPostUrl = '/device/addagenda';
 		$('.device-agendas').html(templates.addDeviceForm({ action: formPostUrl }));
 		$('.add-device-form').submit(function(ev){
 			ev.preventDefault();
 			$.post(formPostUrl, {
+				deviceId: deviceId,
 				timeString: $('.input[name="timeString"]').val(),
 				agendaName: $('.input[name="agendaName"]').val()
 			}, function(res){
@@ -45,7 +46,7 @@ $(function(){
 			cancelButtonText: 'Nope'
 		}, function(isConfirm){
 			if (isConfirm){
-				$.post('/device/deleteagenda/' + agendaId, function(res){
+				$.post('/device/deleteagenda/', { agendaId: agendaId }, function(res){
 					swal({
 						type: 'success',
 						title: 'Success!',

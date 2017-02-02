@@ -9,8 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		deviceId: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
-			unique: true
+			allowNull: false
 		},
 		agendaJobName: {
 			type: DataTypes.STRING,
