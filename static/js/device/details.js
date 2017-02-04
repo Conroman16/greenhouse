@@ -5,10 +5,13 @@ $(function(){
 		$('.device-agendas').html(templates.addDeviceForm({ action: formPostUrl }));
 		$('.add-device-form').submit(function(ev){
 			ev.preventDefault();
+			var agendaName = $('.input[name="agendaName"]').val();
+			var timeString = $('.input[name="timeString"]').val();
+
 			$.post(formPostUrl, {
 				deviceId: deviceId,
-				timeString: $('.input[name="timeString"]').val(),
-				agendaName: $('.input[name="agendaName"]').val()
+				timeString: timeString,
+				agendaName: agendaName
 			}, function(res){
 				swal({
 					type: 'success',

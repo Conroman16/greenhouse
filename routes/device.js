@@ -133,7 +133,7 @@ module.exports = () => {
 				},
 				(err, rr) => {
 					if (err){
-						console.log(err);
+						console.error(err);
 						return next(err);
 					}
 					_.map(sensors, (s) => {
@@ -157,13 +157,21 @@ module.exports = () => {
 	});
 
 	router.post('/addagenda', (req, res) => {
-		var deviceId = req.body.deviceId;
+		let deviceId = req.body.deviceId;
+		let timeString = req.body.timeString;
+		let agendaName = req.body.agendaName;
+
 		if (!deviceId)
 			return res.status(500).send({ error: 'Invalid device ID' });
-		else if (!req.body.timeString || !req.body.agendaName)
+		else if (!req.body.agendaName)
 			return res.status(500).send({ error: '"timeString" and "agendaName" must both be truthy' });
 
-		devices.addAgenda(deviceId, req.body.agendaName, req.body.timeString)
+		if (!timeString && agendaName === 'deviceOnSunrise')
+			timeString = 'sunrise';
+		else if (!timeString && agendaName === 'deviceOffSunset')
+			timeString = 'sunset';
+
+		devices.addAgenda(deviceId, agendaName, timeString)
 			.catch((err) => {
 				console.error(err);
 				res.status(500).send(err);
@@ -201,7 +209,9 @@ module.exports = () => {
 			let jobs = [
 				{ value: 'toggleDevice', text: 'Set Interval' },
 				{ value: 'deviceOn', text: 'Turn On' },
-				{ value: 'deviceOff', text: 'Turn Off' }
+				{ value: 'deviceOff', text: 'Turn Off' },
+				{ value: 'deviceOnSunrise', text: 'Turn On at Sunrise' },
+				{ value: 'deviceOffSunset', text: 'Turn Off at Sunset' }
 			];
 			res.render('device/details', {
 				AllAgendaJobs: jobs,

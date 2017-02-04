@@ -93,7 +93,7 @@
 		<input type="hidden" value="<{ deviceId }>" />
 		<div class="form-group">
 			<label for="timeString">Time String</label>
-			<input type="text" class="form-control input" name="timeString" aria-label="Time String" required />
+			<input type="text" class="form-control input" name="timeString" aria-label="Time String" />
 		</div>
 		<div class="form-group">
 			<label for="agendaName">Agenda Name</label>
