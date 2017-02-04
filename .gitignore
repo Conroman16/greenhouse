@@ -3,6 +3,7 @@ static/css/
 
 # Databases
 *.db
+*.db-journal
 
 # Private config files
 *.env.js
