@@ -53,6 +53,14 @@
 							</div>
 							<div class="row device-prop-list-item">
 								<div class="col-4 left-col">
+									<div class="item-title">Is On</div>
+								</div>
+								<div class="col-8 right-col">
+									<div class="item-value isOn">{{ device.isOn|not|not|capfirst }}</div>
+								</div>
+							</div>
+							<div class="row device-prop-list-item">
+								<div class="col-4 left-col">
 									<div class="item-title">Type</div>
 								</div>
 								<div class="col-8 right-col">

@@ -9,12 +9,23 @@ $(function(){
 		device.toggleClass('red green');
 	}
 
+	function toggleIsOn(id, isTurnedOn){
+		var device = $(`.outlet-${id}`);
+		device = device.find('.isOn');
+		if (isTurnedOn)
+			device.text('True');
+		else
+			device.text('False');
+	}
+
 	socket.on('deviceOn', function(data){
 		toggleLed(data.id);
+		toggleIsOn(data.id, true);
 	});
 
 	socket.on('deviceOff', function(data){
 		toggleLed(data.id);
+		toggleIsOn(data.id, false);
 	});
 
 	socket.on('disconnect', function(){
