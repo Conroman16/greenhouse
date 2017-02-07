@@ -43,6 +43,10 @@
 			$('.form-control').addClass('form-control-danger')
 			$('.form-group').addClass('has-danger');
 		};
+		var clearErrors = function(){
+			$('.form-control').removeClass('form-control-danger')
+			$('.form-group').removeClass('has-danger');
+		};
 		$(function(){
 			$('#login-form')
 				.prop('action', loginUrl)
@@ -65,10 +69,15 @@
 						window.location.href = data.redirectUrl || '/';
 					}).catch(function(err){
 					    errorForm();
-					    console.log(err);
+					    console.error(err);
 					    var fb = err.responseJSON.error || '';
 					    if (fb)
 							$('.error-fb').text(fb).removeClass('hide');
+
+						$('.form-control').on('keydown', clearErrors);
+					})
+					.always(function(){
+						loader.hideLoading();
 					});
 				});
 		});
