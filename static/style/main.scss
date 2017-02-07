@@ -3,6 +3,9 @@
 @import 'mixins.scss';
 @import 'outlets.scss';
 @import 'devices.scss';
+@import 'loader.scss';
+@import 'form.scss';
+@import 'navbar.scss';
 
 *{
 	margin: 0;
@@ -14,9 +17,19 @@ body{
 }
 
 .clearfix:after {
-    content: " ";
+    content: ' ';
     display: block;
     clear: both;
+}
+
+.pull-right{
+	float: right;
+
+	&:after{
+		content: ' ';
+		display: block;
+		clear: both;
+	}
 }
 
 .mobile{

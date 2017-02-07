@@ -1,0 +1,42 @@
+.navbar{
+	z-index: 1100;
+	@include drop-shadow();
+}
+
+.topnav {
+	margin: auto;
+	width: 100%;
+	height: 7vh;
+	background-color: #fff;
+}
+
+.logo {
+	width: 32px;
+}
+
+@media (min-width: 375px) {
+	body.mobile{
+		.topnav {
+			height: 13vh;
+		}
+	}
+}
+
+body.mobile{
+
+	.topnav {
+		height: 9vh;
+	}
+
+	.navbar-collapse{
+		width: 112%;
+		margin-left: -1em;
+		padding-left: 1em;
+		margin-top: -0.5em;
+		padding-top: 0.5em;
+
+		&.collapse.show{
+			padding-bottom: 0.3em;
+		}
+	}
+}

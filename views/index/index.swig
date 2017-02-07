@@ -1,16 +1,31 @@
 {% extends '../layout.swig' %}
 
-{% block body %}
-	<h3>Hi</h3>
-	<br>
-	<a href="{{ LogoutPath }}">Logout</a>
-	{# <a href="/status">Status</a> #}
-	<a href="/outlets">Outlets</a>
-	<a href="/device/list">Devices</a>
-	<br>
-	<a href="/shutdown">Shutdown</a>
-	<a href="/restart">Restart</a>
+{% block style %}
+<style>
+	.indx-header,
+	.indx-body{
+		text-align: center;
+	}
+	.indx-img{
+		display: block;
+		margin: auto;
+		padding: 2em;
+	}
+</style>
 {% endblock %}
 
-{% block scripts %}
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col"></div>
+			<div class="col-7">
+				<h1 class="indx-header">Greenhouse</h1>
+				<img class="indx-img" src="/static/img/favicon.ico" />
+				<p class="indx-body">
+					Welcome to the Greenhouse!
+				</p>
+			</div>
+			<div class="col"></div>
+		</div>
+	</div>
 {% endblock %}

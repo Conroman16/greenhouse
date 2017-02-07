@@ -1,0 +1,91 @@
+$loaderSize: 100px;
+$atomColor: #222;
+$one-xDeg: 35deg;
+$one-yDeg: -45deg;
+$two-xDeg: 50deg;
+$two-yDeg: 10deg;
+$three-xDeg: 35deg;
+$three-yDeg: 55deg;
+$loaderTopMargin: 9vh;
+
+@mixin loader-section-animation($name, $x, $y){
+	animation: $name 1s linear infinite;
+	@include keyframes ($name) {
+		0% {
+			transform: rotateX($x) rotateY($y) rotateZ(0deg);
+		}
+		100% {
+			transform: rotateX($x) rotateY($y) rotateZ(360deg);
+		}
+	}
+}
+
+.loading-overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1010;
+	background-color: rgba(255, 255, 255, 0.7);
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	@include fade-in();
+
+	&.loader-hidden{
+		opacity: 0;
+	}
+
+	.loader-wrap{
+		width: $loaderSize;
+		height: $loaderSize;
+		margin: $loaderTopMargin auto auto;
+
+		.loader-animation {
+			position: absolute;
+			top: calc(50% - 32px);
+			left: calc(50% - 32px);
+			width: 64px;
+			height: 64px;
+			border-radius: 50%;
+			perspective: 800px;
+		}
+
+		.inner {
+			position: absolute;
+			box-sizing: border-box;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			top: 0;
+
+			&.one {
+				left: 0;
+				top: 0;
+				@include loader-section-animation(rotate-one, $one-xDeg, $one-yDeg);
+				border-bottom: 3px solid $atomColor;
+			}
+			&.two {
+				right: 0;
+				top: 0;
+				@include loader-section-animation(rotate-two, $two-xDeg, $two-yDeg);
+				border-right: 3px solid $atomColor;
+			}
+			&.three {
+				right: 0;
+				bottom: 0;
+				@include loader-section-animation(rotate-three, $three-xDeg, $three-yDeg);
+				border-top: 3px solid $atomColor;
+			}
+		}
+
+		.nucleus {
+			border-radius: 50%;
+			width: 15px;
+			height: 15px;
+			background: $atomColor;
+			top: calc(100% - 38px);
+			left: calc(100% - 38px);
+			position: absolute;
+		}
+	}
+}

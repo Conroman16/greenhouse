@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="page">
-	<div class="container">
+	<div class="container outlet-{{ Device.outletId }}">
 		<a class="btn btn-secondary" href="/device/list">Back to list</a>
 		<div class="row">
 			<div class="col">
@@ -34,12 +34,15 @@
 					</tr>
 					<tr>
 						<td class="item-title">Default State</td>
-						<td class="item-value">{{ Device.defaultSetting }}</td>
-					</tr>
+						<td class="item-value">{{ Device.defaultSetting|onoff|capfirst }}</td>
 					</tr>
 					<tr>
 						<td class="item-title">Is Paused</td>
-						<td class="item-value">{{ Device.isPaused }}</td>
+						<td class="item-value">{{ Device.isPaused|not|not|capfirst }}</td>
+					</tr>
+					<tr>
+						<td class="item-title">Is On</td>
+						<td class="item-value isOn">{{ Device.isOn|not|not|capfirst }}</td>
 					</tr>
 				</table>
 			</div>

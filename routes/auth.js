@@ -6,10 +6,6 @@ var auth = require('../lib/auth');
 
 module.exports = () => {
 
-	router.get('/createdevuser', (req, res) => {
-		auth.createUser('admin', 'Password1!', 'Dev', 'User');
-	});
-
 	router.get('/logout', (req, res) => {
 		if (req.isAuthenticated())
 			req.logout();
@@ -20,23 +16,26 @@ module.exports = () => {
 		if (req.isAuthenticated())
 			res.redirect('/');
 		else
-			res.render('login');
+			res.render('auth/login');
 	});
 
 	router.post('/login', (req, res, next) => {
 		passport.authenticate('local', (err, user) => {
-			if (err && /of null/i.test(err))
-				return res.redirect(`${config.registerPath}?from=login`);
-			else if (!user)
-				return res.redirect(`${config.loginPath}?status=failed`);
+			if ((err && /of null/i.test(err)) || !user)
+				return res.status(500).send({ success: false, error: 'Invalid credentials' });
 
 			req.logIn(user, (err) => {
 				if (err)
 					return next(err);
-				else if (req.query.u)
-					return res.redirect(decodeURIComponent(u));
-				else
-					return res.redirect('/');
+
+				let redirectUrl = '/';
+				if (req.query.u)
+					redirectUrl = decodeURIComponent(req.query.u);
+
+				return res.send({
+					success: true,
+					redirectUrl: redirectUrl
+				});
 			});
 		})(req, res, next);
 	});
@@ -45,7 +44,7 @@ module.exports = () => {
 		if (req.isAuthenticated())
 			res.redirect('/');
 		else
-			res.render('register');
+			res.render('auth/register');
 	});
 
 	router.post('/register', (req, res) => {

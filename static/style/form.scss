@@ -1,0 +1,54 @@
+$inputGroupAddonColor: #eceeef;
+
+.auth-form{
+	@include drop-shadow();
+	border: 1px solid rgba(0,0,0,0.05);
+	padding: 3em;
+}
+
+.form{
+	@include drop-shadow();
+	border: 1px solid rgba(0,0,0,0.05);
+	padding: 1em 2em;
+
+	.form-group{
+		height: 100%;
+		margin: 1em 0;
+
+		label{
+			@include no-highlight();
+		}
+	}
+
+	.input-group{
+		height: 4.55vh;
+	}
+
+	textarea.form-control{
+		min-height: 6em;
+	}
+	fieldset.form-group{
+		@include no-highlight();
+	}
+
+	.submit-wrap{
+		height: 4.2em;
+	}
+
+	.incrementer,
+	.decrementer{
+		cursor: pointer;
+		width: 3em;
+		font-weight: bold;
+		@include fade-in(background-color, 0.05s);
+		@include no-highlight();
+
+		&:hover{
+			background-color: darken($inputGroupAddonColor, 2.5%);
+		}
+
+		&:active{
+			background-color: darken($inputGroupAddonColor, 5%);
+		}
+	}
+}

@@ -13,6 +13,8 @@ let device = require('./lib/device');
 let weather = require('./lib/weather');
 
 // Suppress bluebird warnings
+//  - This app does not directly depend on bluebird (and probably never will now that ES6 includes native native Promises),
+//  - so its warnings aren't really important at this point
 let bluebird = require('bluebird').config({ warnings: false });
 
 setTimeout(() => {
