@@ -11,6 +11,8 @@ let async = require('async');
 
 module.exports = () => {
 
+	router.get('/', (req, res) => res.redirect('/device/list'));
+
 	router.get('/create', (req, res) => {
 		res.render('device/action', {
 			action: 'create',
@@ -160,6 +162,8 @@ module.exports = () => {
 		let deviceId = req.body.deviceId;
 		let timeString = req.body.timeString;
 		let agendaName = req.body.agendaName;
+		let repeating = !!req.body.repeat;
+		let repeatInterval = req.body.repeatInterval;
 
 		if (!deviceId)
 			return res.status(500).send({ error: 'Invalid device ID' });
@@ -171,7 +175,7 @@ module.exports = () => {
 		else if (!timeString && agendaName === 'deviceOffSunset')
 			timeString = 'sunset';
 
-		devices.addAgenda(deviceId, agendaName, timeString)
+		devices.addAgenda(deviceId, agendaName, timeString, repeating, repeatInterval)
 			.catch((err) => {
 				console.error(err);
 				res.status(500).send(err);
@@ -236,8 +240,14 @@ module.exports = () => {
 				async.map(devs, (d, callback) => {
 					let rv = {};
 					if (d.sensorId && d.sensorId !== -1){
+						let v = {};
 						gpio.readSensor(d.sensorId)
-							.catch((e) => callback(e))
+							.catch((e) => {
+								console.error(`An error occurred while attempting to read data from sensor '${d.sensorId}'`);
+								Object.assign(rv, d.dataValues);
+								ds.push(rv);
+								callback();
+							})
 							.then((sd) => {
 								Object.assign(rv, d.dataValues, sd);
 								ds.push(rv);
