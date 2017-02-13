@@ -1,9 +1,16 @@
 $inputGroupAddonColor: #eceeef;
 
+body.mobile{
+	.login-form-wrap,
+	.auth-form{
+		width: 100%;
+	}
+}
+
 .auth-form{
 	@include drop-shadow();
 	border: 1px solid rgba(0,0,0,0.05);
-	padding: 3em;
+	padding: 0.75em 1.75em 1.25em 1.75em;
 }
 
 .form{
@@ -27,6 +34,7 @@ $inputGroupAddonColor: #eceeef;
 	textarea.form-control{
 		min-height: 6em;
 	}
+
 	fieldset.form-group{
 		@include no-highlight();
 	}

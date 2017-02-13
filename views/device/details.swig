@@ -84,7 +84,7 @@
 			<div class="col-1">
 				<button class="js-add-agenda btn btn-success" data-deviceid="{{ Device.id }}">+ Add</button>
 			</div>
-			<div class="col device-agendas"></div>
+			<div class="col add-device-agenda-form-wrap"></div>
 		</div>
 	</div>
 </div>
@@ -96,7 +96,7 @@
 		<input type="hidden" value="<{ deviceId }>" />
 		<div class="form-group">
 			<label for="timeString">Time String</label>
-			<input type="text" class="form-control input" name="timeString" aria-label="Time String" />
+			<input type="text" class="form-control-inline input" name="timeString" aria-label="Time String" />
 		</div>
 		<div class="form-group">
 			<label for="agendaName">Agenda Name</label>
@@ -105,6 +105,12 @@
 					<option class="agenda-item" value="{{ job.value }}">{{ job.text }}</option>
 				{% endfor %}
 			</select>
+		</div>
+		<div class="form-group form-check form-check-inline">
+			<label for="repeating" class="form-check-label">
+				<input type="checkbox" name="repeating" class="form-check-input input no-check-padding" aria-label="Repeating" value="1" />
+				Repeating
+			</label>
 		</div>
 		<div class="form-group">
 			<input type="submit" class="btn btn-submit" />

@@ -2,16 +2,18 @@ $(function(){
 	$('.js-add-agenda').click(function(){
 		var deviceId = $(this).data('deviceid');
 		var formPostUrl = '/device/addagenda';
-		$('.device-agendas').html(templates.addDeviceForm({ action: formPostUrl }));
+		$('.add-device-agenda-form-wrap').html(templates.addDeviceForm({ action: formPostUrl }));
 		$('.add-device-form').submit(function(ev){
 			ev.preventDefault();
 			var agendaName = $('.input[name="agendaName"]').val();
 			var timeString = $('.input[name="timeString"]').val();
+			var repeating = $('.input[name="repeating"]').is(':checked');
 
 			$.post(formPostUrl, {
 				deviceId: deviceId,
 				timeString: timeString,
-				agendaName: agendaName
+				agendaName: agendaName,
+				repeating: repeating
 			}, function(res){
 				swal({
 					type: 'success',

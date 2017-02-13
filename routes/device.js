@@ -162,7 +162,7 @@ module.exports = () => {
 		let deviceId = req.body.deviceId;
 		let timeString = req.body.timeString;
 		let agendaName = req.body.agendaName;
-		let repeating = !!req.body.repeat;
+		let repeating = !!req.body.repeating;
 		let repeatInterval = req.body.repeatInterval;
 
 		if (!deviceId)
@@ -240,18 +240,17 @@ module.exports = () => {
 				async.map(devs, (d, callback) => {
 					let rv = {};
 					if (d.sensorId && d.sensorId !== -1){
-						let v = {};
 						gpio.readSensor(d.sensorId)
+							.then((sd) => {
+								Object.assign(rv, d.dataValues, sd);
+								ds.push(rv);
+								return callback();
+							})
 							.catch((e) => {
 								console.error(`An error occurred while attempting to read data from sensor '${d.sensorId}'`);
 								Object.assign(rv, d.dataValues);
 								ds.push(rv);
-								callback();
-							})
-							.then((sd) => {
-								Object.assign(rv, d.dataValues, sd);
-								ds.push(rv);
-								callback();
+								return callback();
 							});
 					}
 					else if (d.outletId && d.outletId !== -1){

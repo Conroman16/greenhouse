@@ -23,7 +23,7 @@
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="/outlets">Outlets</a>
 					<a class="dropdown-item" href="/device/list">Devices</a>
-					<a class="dropdown-item" href="/agendash">Agendash</a>
+					<a class="dropdown-item" href="/agendash" target="_blank">Agendash</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/shutdown">Shutdown</a>
 					<a class="dropdown-item" href="/restart">Restart</a>
