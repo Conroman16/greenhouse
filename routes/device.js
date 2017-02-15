@@ -203,7 +203,7 @@ module.exports = () => {
 		if (!deviceId)
 			return res.status(500).redirect('/device/list');
 
-		devices.get(deviceId, true).then((dev) => {
+		devices.get(deviceId, true, true).then((dev) => {
 			let device = dev.dataValues;
 			if (device.outletId){
 				Object.assign(device, {

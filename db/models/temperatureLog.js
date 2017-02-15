@@ -9,16 +9,17 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		deviceId: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
-			unique: true
+			allowNull: false
 		},
 		temperature_f: {
-			type: DataTypes.STRING,
-			allowNull: false
+			type: DataTypes.REAL,
+			allowNull: true,
+			defaultValue: null
 		},
 		humidity: {
-			type: DataTypes.STRING,
-			allowNull: false
+			type: DataTypes.REAL,
+			allowNull: true,
+			defaultValue: null
 		}
 	}, {
 		classMethods: {

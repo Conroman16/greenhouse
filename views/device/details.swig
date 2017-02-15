@@ -4,22 +4,32 @@
 <div class="page">
 	<div class="container outlet-{{ Device.outletId }}">
 		<a class="btn btn-secondary" href="/device/list">Back to list</a>
+		{% if Device.outletId %}
 		<div class="row">
 			<div class="col">
 				<div class="device-status led {{ Device.ledClass }} device-toggle outlet-{{ Device.outletId }}" data-deviceid="{{ Device.id }}"></div>
 			</div>
 		</div>
+		{% endif %}
 		<div class="row">
-			<div class="col">
+			<div class="col-md-6">
 				<table>
 					<tr>
 						<td class="item-title">Device ID</td>
 						<td class="item-value">{{ Device.id|default('--') }}</td>
 					</tr>
+					{% if Device.outletId %}
 					<tr>
 						<td class="item-title">Outlet ID</td>
-						<td class="item-value">{{ Device.outletId|default('--') }}</td>
+						<td class="item-value">{{ Device.outletId }}</td>
 					</tr>
+					{% endif %}
+					{% if Device.sensorId %}
+					<tr>
+						<td class="item-title">Sensor ID</td>
+						<td class="item-value">{{ Device.sensorId }}</td>
+					</tr>
+					{% endif %}
 					<tr>
 						<td class="item-title">Name</td>
 						<td class="item-value">{{ Device.name|default('--') }}</td>
@@ -46,10 +56,24 @@
 					</tr>
 				</table>
 			</div>
-		</div>
-		{% if Device.DeviceAgendas %}<hr>{% endif %}
-		<div class="row">
-			<div class="col">
+			{% if Device.TemperatureLogs|notempty %}
+			<div class="col-md-6">
+				<table class="temp-log">
+					<tr>
+						<th>Temperature</th>
+						<th>Humidity</th>
+					</tr>
+					{% for tempLog in Device.TemperatureLogs  %}
+					<tr>
+						<td>{{ tempLog.temperature_f|tempf|default('--') }}</td>
+						<td>{{ tempLog.humidity|percent|default('--') }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			{% endif %}
+			{% if Device.DeviceAgendas|notempty %}
+			<div class="col-md-6">
 				{% for agenda in Device.DeviceAgendas  %}
 				<div class="row">
 					<div class="col-1"></div>
@@ -79,6 +103,7 @@
 				</div>
 				{% endfor %}
 			</div>
+			{% endif %}
 		</div>
 		<div class="row">
 			<div class="col-1">
