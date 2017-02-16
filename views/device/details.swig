@@ -3,7 +3,12 @@
 {% block body %}
 <div class="page">
 	<div class="container outlet-{{ Device.outletId }}">
-		<a class="btn btn-secondary" href="/device/list">Back to list</a>
+		<div class="row">
+			<div class="col">
+				<a class="btn btn-secondary" href="/device/list">Back to list</a>
+			</div>
+		</div>
+		<br>
 		{% if Device.outletId %}
 		<div class="row">
 			<div class="col">
@@ -12,92 +17,110 @@
 		</div>
 		{% endif %}
 		<div class="row">
-			<div class="col-md-6">
-				<table>
-					<tr>
-						<td class="item-title">Device ID</td>
-						<td class="item-value">{{ Device.id|default('--') }}</td>
-					</tr>
-					{% if Device.outletId %}
-					<tr>
-						<td class="item-title">Outlet ID</td>
-						<td class="item-value">{{ Device.outletId }}</td>
-					</tr>
-					{% endif %}
-					{% if Device.sensorId %}
-					<tr>
-						<td class="item-title">Sensor ID</td>
-						<td class="item-value">{{ Device.sensorId }}</td>
-					</tr>
-					{% endif %}
-					<tr>
-						<td class="item-title">Name</td>
-						<td class="item-value">{{ Device.name|default('--') }}</td>
-					</tr>
-					<tr>
-						<td class="item-title">Type</td>
-						<td class="item-value">{{ Device.type|default('--') }}</td>
-					</tr>
-					<tr>
-						<td class="item-title">Description</td>
-						<td class="item-value">{{ Device.description|default('--') }}</td>
-					</tr>
-					<tr>
-						<td class="item-title">Default State</td>
-						<td class="item-value">{{ Device.defaultSetting|onoff|capfirst }}</td>
-					</tr>
-					<tr>
-						<td class="item-title">Is Paused</td>
-						<td class="item-value">{{ Device.isPaused|not|not|capfirst }}</td>
-					</tr>
-					<tr>
-						<td class="item-title">Is On</td>
-						<td class="item-value isOn">{{ Device.isOn|not|not|capfirst }}</td>
-					</tr>
-				</table>
-			</div>
-			{% if Device.TemperatureLogs|notempty %}
-			<div class="col-md-6">
-				<canvas id="temp-chart-canvas"></canvas>
-				<canvas id="humid-chart-canvas"></canvas>
-			</div>
-			{% endif %}
-			{% if Device.DeviceAgendas|notempty %}
-			<div class="col-md-6">
-				{% for agenda in Device.DeviceAgendas  %}
-				<div class="row">
-					<div class="col-1"></div>
-					<div class="col">
-						<table class="col device-interval-info">
+			<div class="col-xl-6">
+				<div class="card">
+					<div class="card-block">
+						<table>
 							<tr>
-								<td class="title">Device Agenda ID</td>
-								<td>{{ agenda.id|default('--') }}</td>
+								<td class="item-title">Device ID</td>
+								<td class="item-value">{{ Device.id|default('--') }}</td>
+							</tr>
+							{% if Device.outletId %}
+							<tr>
+								<td class="item-title">Outlet ID</td>
+								<td class="item-value">{{ Device.outletId }}</td>
+							</tr>
+							{% endif %}
+							{% if Device.sensorId %}
+							<tr>
+								<td class="item-title">Sensor ID</td>
+								<td class="item-value">{{ Device.sensorId }}</td>
+							</tr>
+							{% endif %}
+							<tr>
+								<td class="item-title">Name</td>
+								<td class="item-value">{{ Device.name|default('--') }}</td>
 							</tr>
 							<tr>
-								<td class="title">Device ID</td>
-								<td>{{ agenda.deviceId|default('--') }}</td>
+								<td class="item-title">Type</td>
+								<td class="item-value">{{ Device.type|default('--') }}</td>
 							</tr>
 							<tr>
-								<td class="title">Agenda Job Name</td>
-								<td>{{ agenda.agendaJobName|default('--') }}</td>
+								<td class="item-title">Description</td>
+								<td class="item-value">{{ Device.description|default('--') }}</td>
 							</tr>
 							<tr>
-								<td class="title">Time String</td>
-								<td>{{ agenda.timeString|default('--') }}</td>
+								<td class="item-title">Default State</td>
+								<td class="item-value">{{ Device.defaultSetting|onoff|capfirst }}</td>
+							</tr>
+							<tr>
+								<td class="item-title">Is Paused</td>
+								<td class="item-value">{{ Device.isPaused|not|not|capfirst }}</td>
+							</tr>
+							<tr>
+								<td class="item-title">Is On</td>
+								<td class="item-value isOn">{{ Device.isOn|not|not|capfirst }}</td>
 							</tr>
 						</table>
 					</div>
-					<div class="col-1">
-						<button class="js-delete-btn btn btn-danger" data-agendaid="{{ agenda.id }}">X</button>
+				</div>
+				<br>
+			</div>
+			{% if Device.TemperatureLogs|notempty %}
+			<div class="col-xl-6">
+				<div class="card">
+					<div class="card-block">
+						<canvas id="temp-chart-canvas"></canvas>
 					</div>
 				</div>
+				<br>
+				<div class="card">
+					<div class="card-block">
+						<canvas id="humid-chart-canvas"></canvas>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			{% if Device.DeviceAgendas|notempty %}
+			<div class="col-xl-6">
+				{% for agenda in Device.DeviceAgendas  %}
+				<div class="row">
+					<div class="col card">
+						<div class="card-block row">
+							<div class="col">
+								<table>
+									<tr>
+										<td class="item-title">Agenda Job Name</td>
+										<td class="item-value">{{ agenda.agendaJobName|default('--') }}</td>
+									</tr>
+									<tr>
+										<td class="item-title">Time String</td>
+										<td class="item-value">{{ agenda.timeString|default('--') }}</td>
+									</tr>
+									<tr>
+										<td class="item-title">Repeating</td>
+										<td class="item-value">{{ agenda.repeating|not|not }}</td>
+									</tr>
+									<tr>
+										<td class="item-title">Is Paused</td>
+										<td class="item-value">{{ agenda.isPaused|not|not }}</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-2">
+								<a href="#" class="js-delete-btn btn btn-danger pull-right" data-agendaid="{{ agenda.id }}">X</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
 				{% endfor %}
 			</div>
 			{% endif %}
 		</div>
 		<div class="row">
-			<div class="col-1">
-				<button class="js-add-agenda btn btn-success" data-deviceid="{{ Device.id }}">+ Add</button>
+			<div class="col-2">
+				<button class="js-add-agenda btn btn-success" data-deviceid="{{ Device.id }}">+ Add Agenda</button>
 			</div>
 			<div class="col add-device-agenda-form-wrap"></div>
 		</div>
@@ -150,8 +173,9 @@
 				yminoffset: 5,
 				ymaxoffset: 5
 			})
-			.fail(function(err){
-				console.error('ERROR GETTING CHART DATA', err);
+			.fail((err) => {
+				console.error(err);
+				reject(err);
 			})
 			.done(function(resData){
 				let ctx = canvas;
@@ -199,6 +223,7 @@
 					data: data,
 					options: chartOpts
 				});
+				resolve(chart);
 			});
 		});
 	}
@@ -207,10 +232,18 @@
 		let tempCtx = $('#temp-chart-canvas');
 		let humidCtx = $('#humid-chart-canvas');
 
+		let tempLoaderTarget = tempCtx.closest('.card');
+		let humidLoaderTarget = humidCtx.closest('.card');
+
+		loader.showLoading(tempLoaderTarget);
+		loader.showLoading(humidLoaderTarget);
+
 		if (tempCtx.length > 0)
-			createChart(tempCtx, 'temperature');
+			createChart(tempCtx, 'temperature')
+				.then(() => loader.hideLoading(tempLoaderTarget));
 		if (humidCtx.length > 0)
-			createChart(humidCtx, 'humidity');
+			createChart(humidCtx, 'humidity')
+				.then(() => loader.hideLoading(humidLoaderTarget));
 	});
 </script>
 {% endblock %}
