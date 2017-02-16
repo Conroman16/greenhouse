@@ -249,7 +249,7 @@ module.exports = () => {
 		if (timeStamp){
 			timeStamp = new Date(timeStamp);
 			query.where.createdAt = {
-				$gt: new Date() - timeStamp
+				$gt: timeStamp
 			};
 		}
 		else if (limit){
