@@ -58,18 +58,8 @@
 			</div>
 			{% if Device.TemperatureLogs|notempty %}
 			<div class="col-md-6">
-				<table class="temp-log">
-					<tr>
-						<th>Temperature</th>
-						<th>Humidity</th>
-					</tr>
-					{% for tempLog in Device.TemperatureLogs  %}
-					<tr>
-						<td>{{ tempLog.temperature_f|tempf|default('--') }}</td>
-						<td>{{ tempLog.humidity|percent|default('--') }}</td>
-					</tr>
-					{% endfor %}
-				</table>
+				<canvas id="temp-chart-canvas"></canvas>
+				<canvas id="humid-chart-canvas"></canvas>
 			</div>
 			{% endif %}
 			{% if Device.DeviceAgendas|notempty %}
@@ -146,6 +136,81 @@
 
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="/static/js/device/devices.js"></script>
 <script src="/static/js/device/details.js"></script>
+<script>
+	function createChart(canvas, type){
+		return new Promise(function(resolve, reject){
+			let isTemp = type === 'temperature';
+
+			$.get('/device/chartdata/' + type + '/{{ Device.id }}', {
+				timestamp: new Date(new Date() - 1000 * 60 * 60 * 24).toJSON(),
+				yminoffset: 5,
+				ymaxoffset: 5
+			})
+			.fail(function(err){
+				console.error('ERROR GETTING CHART DATA', err);
+			})
+			.done(function(resData){
+				let ctx = canvas;
+				if (ctx.length <= 0)
+					return;
+
+				var chartOpts = {
+					scales: {
+						yAxes: [{
+							ticks: {
+								min: resData.ymin,
+								max: resData.ymax
+							},
+							scaleLabel: {
+								display: true,
+								labelString: isTemp ? 'Degrees (Fahrenheit)' : 'Percentage (%)'
+							}
+						}],
+						xAxes: [{
+							type: 'time',
+							time: {
+								unit: 'hour',
+							}
+						}]
+					},
+					tooltips: {
+						enabled: true,
+						callbacks: {
+							title: (tooltipItems, data) => moment(tooltipItems.xLabel).format('M/D/YY h:mma'),
+							label: (tooltipItems, data) => `${tooltipItems.yLabel}${isTemp ? ' °F' : '%'}`
+						}
+					}
+				};
+				let data = {
+					datasets: [{
+						label: isTemp ? 'Temperature' : 'Humidity',
+						spanGaps: true,
+						data: resData.data,
+						backgroundColor: isTemp ? 'rgba(230, 126, 34, 0.25)' : 'rgba(52, 152, 219, 0.25)',
+						borderColor: isTemp ? 'rgba(230, 126, 34, 0.75)' : 'rgba(52, 152, 219, 0.75)'
+					}]
+				};
+				let chart = new Chart(ctx, {
+					type: 'line',
+					data: data,
+					options: chartOpts
+				});
+			});
+		});
+	}
+
+	$(function(){
+		let tempCtx = $('#temp-chart-canvas');
+		let humidCtx = $('#humid-chart-canvas');
+
+		if (tempCtx.length > 0)
+			createChart(tempCtx, 'temperature');
+		if (humidCtx.length > 0)
+			createChart(humidCtx, 'humidity');
+	});
+</script>
 {% endblock %}

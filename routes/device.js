@@ -8,6 +8,7 @@ let devices = require('../lib/device');
 let scheduler = require('../lib/scheduler');
 let db = require('../db');
 let async = require('async');
+let moment = require('moment');
 
 module.exports = () => {
 
@@ -225,6 +226,55 @@ module.exports = () => {
 			res.sendStatus(500);
 			console.error(err);
 		});
+	});
+
+	router.get('/chartData/:type/:id', (req, res) => {
+		let deviceID = req.params.id;
+		let type = req.params.type;
+		let limit = req.query.limit;
+		let timeStamp = req.query.timestamp;
+		let yminOffset = JSON.parse(req.query.yminoffset || 0);
+		let ymaxOffset = JSON.parse(req.query.ymaxoffset || 0);
+		let isTemp = type === 'temperature';
+		let isHumidity = type === 'humidity';
+
+		if (!deviceID || !type || !/temperature|humidity/i.test(type))
+			return res.status(500).send({ error: 'Invalid parameters' });
+
+		let query = {
+			where: { deviceId: deviceID },
+			order: 'createdAt DESC'
+		};
+
+		if (timeStamp){
+			timeStamp = new Date(timeStamp);
+			query.where.createdAt = {
+				$gt: new Date() - timeStamp
+			};
+		}
+		else if (limit){
+			limit = JSON.parse(limit);
+			query.limit = limit;
+		}
+
+		db.TemperatureLog.findAll(query)
+			.catch((err) => res.status(500).send(err))
+			.then((logs) => {
+				let raw = isTemp ? _.pluck(logs, 'temperature_f') : _.pluck(logs, 'humidity');
+				let ymin = isTemp ? Math.round(Math.min(...raw) - yminOffset) : 0;
+				let ymax = isTemp ? Math.round(Math.max(...raw) + ymaxOffset) : 100;
+				let retData = _.map(logs, (l) => {
+					return {
+						x: l.createdAt,
+						y: isTemp ? l.temperature_f : l.humidity
+					};
+				});
+				res.send({
+					data: retData,
+					ymin: ymin,
+					ymax: ymax
+				});
+			});
 	});
 
 	router.get('/list', (req, res) => {
