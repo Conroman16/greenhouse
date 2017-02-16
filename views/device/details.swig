@@ -204,11 +204,12 @@
 					tooltips: {
 						enabled: true,
 						callbacks: {
-							title: (tooltipItems, data) => moment(tooltipItems.xLabel).format('M/D/YY h:mma'),
+							title: (tooltipItems, data) => moment(tooltipItems[0].xLabel).format('M/D/YY h:mma'),
 							label: (tooltipItems, data) => `${tooltipItems.yLabel}${isTemp ? ' °F' : '%'}`
 						}
 					}
 				};
+
 				let data = {
 					datasets: [{
 						label: isTemp ? 'Temperature' : 'Humidity',
@@ -218,11 +219,13 @@
 						borderColor: isTemp ? 'rgba(230, 126, 34, 0.75)' : 'rgba(52, 152, 219, 0.75)'
 					}]
 				};
+
 				let chart = new Chart(ctx, {
 					type: 'line',
 					data: data,
 					options: chartOpts
 				});
+
 				resolve(chart);
 			});
 		});
