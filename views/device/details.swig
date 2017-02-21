@@ -65,6 +65,15 @@
 					</div>
 				</div>
 				<br>
+				<div class="card">
+					<div class="card-block row">
+						<div class="col-3">
+							<button class="js-add-agenda btn btn-success" data-deviceid="{{ Device.id }}">+ Add Agenda</button>
+						</div>
+						<div class="col add-device-agenda-form-wrap"></div>
+					</div>
+				</div>
+				<br>
 			</div>
 			{% if Device.TemperatureLogs|notempty %}
 			<div class="col-xl-6">
@@ -99,11 +108,11 @@
 									</tr>
 									<tr>
 										<td class="item-title">Repeating</td>
-										<td class="item-value">{{ agenda.repeating|not|not }}</td>
+										<td class="item-value">{{ agenda.repeating }}</td>
 									</tr>
 									<tr>
 										<td class="item-title">Is Paused</td>
-										<td class="item-value">{{ agenda.isPaused|not|not }}</td>
+										<td class="item-value">{{ agenda.isPaused }}</td>
 									</tr>
 								</table>
 							</div>
@@ -118,12 +127,6 @@
 			</div>
 			{% endif %}
 		</div>
-		<div class="row">
-			<div class="col-2">
-				<button class="js-add-agenda btn btn-success" data-deviceid="{{ Device.id }}">+ Add Agenda</button>
-			</div>
-			<div class="col add-device-agenda-form-wrap"></div>
-		</div>
 	</div>
 </div>
 {% endblock %}
@@ -134,11 +137,12 @@
 		<input type="hidden" value="<{ deviceId }>" />
 		<div class="form-group">
 			<label for="timeString">Time String</label>
-			<input type="text" class="form-control-inline input" name="timeString" aria-label="Time String" />
+			<input type="text" class="form-control input" name="timeString" aria-label="Time String" />
 		</div>
 		<div class="form-group">
 			<label for="agendaName">Agenda Name</label>
-			<select name="agendaName" class="input">
+			<select name="agendaName" class="input form-control">
+				<option value=""></option>
 				{% for job in AllAgendaJobs %}
 					<option class="agenda-item" value="{{ job.value }}">{{ job.text }}</option>
 				{% endfor %}
@@ -150,6 +154,7 @@
 				Repeating
 			</label>
 		</div>
+		<br><br>
 		<div class="form-group">
 			<input type="submit" class="btn btn-submit" />
 		</div>
