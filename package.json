@@ -13,10 +13,11 @@
   "author": "Connor Kennedy",
   "license": "MIT",
   "dependencies": {
+    "agenda": "^0.9.0",
     "agendash": "^0.4.0",
     "async": "^2.1.4",
     "bcrypt": "^0.8.7",
-    "body-parser": "^1.15.2",
+    "body-parser": "^1.17.1",
     "connect-sqlite3": "^0.9.8",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
@@ -24,13 +25,12 @@
     "moment": "^2.13.0",
     "node-dht-sensor": "0.0.32",
     "node-rest-client": "^2.0.1",
-    "node-sass-middleware": "^0.10.0",
+    "node-sass-middleware": "^0.11.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "rpi-gpio": "^0.7.0",
     "sequelize": "^3.27.0",
     "socketio": "^1.0.0",
-    "sqlite3": "^3.1.8",
     "swig-templates": "^2.0.2",
     "underscore": "^1.8.3"
   }

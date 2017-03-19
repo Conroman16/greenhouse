@@ -1,6 +1,7 @@
-var router = require('express').Router();
-var childProcess = require('child_process');
-let gpio = require('../lib/gpio')
+let router = require('express').Router();
+let childProcess = require('child_process');
+let gpio = require('../lib/gpio');
+let weather = require('../lib/weather');
 
 function execCommand(command, cb){
 	return childProcess.exec(command, cb);
@@ -10,17 +11,11 @@ module.exports = () => {
 
 	router.get('/', (req, res) => res.render('index/index'));
 
-	router.get('/th/:pin', (req, res) => {
-		let p = JSON.parse(req.params.pin);
-		gpio.readSensor(p)
-			.catch((err) => res.status(500).send(err))
-			.then((data) => res.send(data));
-	});
-
-	router.get('/allth', (req, res) => {
-		gpio.readAllSensors()
-			.catch((err) => res.status(500).send(err))
-			.then((sensorData) => res.send(sensorData));
+	router.get('/astronomy', (req, res) => {
+		res.send({
+			sunrise: weather.sunrise,
+			sunset: weather.sunset
+		});
 	});
 
 	router.get('/cam', (req, res) => {

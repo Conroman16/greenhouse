@@ -49,8 +49,13 @@ body{
 	width: 72%;
 }
 
+.invisible,
 .clear{
 	opacity: 0;
+}
+
+.fade-in{
+	@include fade-in();
 }
 
 .hide{
