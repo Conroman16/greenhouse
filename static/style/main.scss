@@ -1,11 +1,12 @@
-@import 'variables.scss';
-@import 'fonts.scss';
-@import 'mixins.scss';
-@import 'outlets.scss';
-@import 'devices.scss';
-@import 'loader.scss';
-@import 'form.scss';
-@import 'navbar.scss';
+@import 'variables';
+@import 'fonts';
+@import 'mixins';
+@import 'outlets';
+@import 'devices';
+@import 'loader';
+@import 'form';
+@import 'navbar';
+@import 'weathericons';
 
 *{
 	margin: 0;
@@ -62,7 +63,17 @@ body{
 	display: none;
 }
 
-// Bootstrap Overrides
+// Bootstrap Override
 .no-check-padding{
 	padding-left: 0;
+}
+
+.indx-header,
+.indx-body{
+	text-align: center;
+}
+.indx-img{
+	display: block;
+	margin: auto;
+	padding: 1em;
 }

@@ -16,14 +16,14 @@
 		}
 	</script>
 	{% block style %}{% endblock %}
-	{% if IsDev %}
+	{# {% if IsDev %}
 	<link rel="stylesheet" href="/static/css/devdata.css"></link>
 	<div id="dev-data-banner-wrap" class="clearfix">
 		<div class="dev-data-banner">
 			<p class="dev-data-banner-text">Dev Data</p>
 		</div>
 	</div>
-	{% endif %}
+	{% endif %} #}
 	<script id="loader-template" data-name="loader" type="text/x-swig-template">
 		{% include 'partials/loader.swig' %}
 	</script>

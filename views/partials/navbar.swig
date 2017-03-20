@@ -3,12 +3,12 @@
 			aria-expanded="false" aria-label="Menu">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<a class="navbar-brand" href="/">
+	{# <a class="navbar-brand" href="/">
 		<img src="/static/img/favicon.ico" alt="logo" class="logo align-middle" width="32px" />
-	</a>
+	</a> #}
 	<div class="collapse navbar-collapse align-middle" id="navbarNav">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
+			<li class="nav-item">
 				<a class="nav-link" href="/">Home</a>
 			</li>
 			<li class="nav-item">
@@ -41,7 +41,19 @@
 
 {% block templates %}
 <script id="navbarAstronomyTemplate" type="text/x-swig-template">
-	<span>Sunrise <{ sunrise }></span><br>
-	<span>Senset <{ sunset }></span>
+	<table>
+		<tr>
+			<td class="label">
+				<i class="wi wi-sunrise" title="Sunrise"></i>
+			</td>
+			<td class="data"><{ sunrise }></td>
+		</tr>
+		<tr>
+			<td class="label">
+				<i class="wi wi-sunset" title="Sunset"></i>
+			</td>
+			<td class="data"><{ sunset }></td>
+		</tr>
+	</table>
 </script>
 {% endblock %}
